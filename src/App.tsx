@@ -5,7 +5,7 @@ function App() {
 
   return (
     <>
-      <div>Welcome to my todos app...!</div>
+      <div>Welcome to my todos app</div>
     </>
   )
 }
