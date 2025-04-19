@@ -15,4 +15,10 @@ export interface ITodoItem {
     expiresAt?: Date,
     isUrgent: boolean,
     status: TodoState,
-} 
+}
+
+export interface IUser {
+    email: string,
+    password: string,
+    name: string
+}
