@@ -1,19 +1,12 @@
-import { ITodoItem } from "../@types";
+import { Action, IState, ITodoItem } from "../@types";
 
-interface IState {
-    todos: ITodoItem[],
-    deletedTodos: ITodoItem[] 
-}
 
-type Action = 
-    {type: "ADD_TODO", payload: ITodoItem} |
-    {type: "DELETE_TODO", payload:  ITodoItem} |
-    {type: "COMPLETE_TODO", payload: string} |
-    {type: "EDIT_TODO", payload: {id: string, newData: ITodoItem}} |
-    {type: "PERMANENT_DELETE", payload: string}
 
 const reducer = (state: IState, action: Action): IState => {
     switch(action.type) {
+        case "INIT_DATA": {
+                return {...state, ...action.payload}
+        }
         case "ADD_TODO": {
             const newTodo: ITodoItem = action.payload;
             return {...state, todos: [newTodo, ...state.todos]};
