@@ -4,9 +4,6 @@ import { INITIAL_CONTEXT } from "./constants";
 import useLocalStorage from "../../hooks/useLocalStorage";
 
 
-
-
-
 const AuthContext = createContext<IAuthContext> (INITIAL_CONTEXT);
 
 const AuthProvider = (props: IContextProps) => {
