@@ -1,4 +1,4 @@
-import { IState, IStateContext, ITodoItem } from "../../@types";
+import { IStateContext } from "../../@types";
 
 
 export const INITIAL_CONTEXT: IStateContext = {

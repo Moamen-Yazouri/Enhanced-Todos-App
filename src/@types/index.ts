@@ -5,7 +5,7 @@ export enum EStatus {
     DELAYED = "delayed",
 }
 
-type TodoState = `${EStatus}`
+export type TodoState = `${EStatus}`
 
 export interface ITodoItem {
     id: string,

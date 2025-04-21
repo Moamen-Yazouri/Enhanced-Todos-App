@@ -1,11 +1,10 @@
+import { getTaskStatus } from "@/utils/getTaskStatus";
 import { Action, IState, ITodoItem } from "../@types";
-
-
 
 const reducer = (state: IState, action: Action): IState => {
     switch(action.type) {
         case "INIT_DATA": {
-                return {...state, ...action.payload}
+                return {...state, todos: action.payload.todos, deletedTodos: action.payload.deletedTodos}
         }
         case "ADD_TODO": {
             const newTodo: ITodoItem = action.payload;
@@ -24,7 +23,7 @@ const reducer = (state: IState, action: Action): IState => {
 
         case "COMPLETE_TODO": {
             const id = action.payload;
-            const updatedTodos: ITodoItem[] = state.todos.map((todo) => todo.id === id ? {...todo, status: "completed"} : todo);
+            const updatedTodos: ITodoItem[] = state.todos.map((todo) => todo.id === id ? {...todo, status: getTaskStatus(todo)} : todo);
             return {...state, todos: updatedTodos}
         }
 
