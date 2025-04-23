@@ -5,6 +5,13 @@ export enum EStatus {
     DELAYED = "delayed",
 }
 
+export enum EPriority {
+    LOW = "low", 
+    MEDIUM = "medium",  
+    HIGH = "high",
+}
+export type TodoProirity = `${EPriority}`;
+
 export type TodoState = `${EStatus}`
 
 export interface ITodoItem {
@@ -13,7 +20,7 @@ export interface ITodoItem {
     description: string,
     createdAt: Date,
     expiresAt?: Date,
-    isUrgent: boolean,
+    priority: TodoProirity,
     status: TodoState,
 }
 
