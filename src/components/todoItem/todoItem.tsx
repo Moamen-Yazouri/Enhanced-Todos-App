@@ -1,5 +1,3 @@
-"use client"
-
 import { useState } from "react"
 import { Edit, Trash2, CheckCircle, Clock, Calendar, AlertCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -8,13 +6,14 @@ import { Textarea } from "@/components/ui/textarea"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { ITodoItem } from "@/@types"
+import { getStatusStyles } from "@/utils/getStyleStatus"
 
 export type TodoState = "pending" | "completed" | "deleted" | "delayed"
 
 export interface IProps extends ITodoItem {
-  onComplete?: (id: string) => void
-  onDelete?: (id: string) => void
-  onEdit?: (id: string, data: { title: string; description: string }) => void
+  onComplete: (id: string) => void
+  onDelete: (id: string) => void
+  onEdit: (id: string, data: { title: string; description: string }) => void
 }
 
 export default function TodoItem(props: IProps) {
@@ -47,10 +46,6 @@ export default function TodoItem(props: IProps) {
   }
 
   const handleSaveEdit = () => {
-    onEdit?.(id, {
-      title: editedTitle,
-      description: editedDescription,
-    })
     setIsEditing(false)
   }
 
@@ -60,41 +55,6 @@ export default function TodoItem(props: IProps) {
     setIsEditing(false)
   }
 
-  // Status styling
-  const getStatusStyles = (status: TodoState) => {
-    switch (status) {
-      case "pending":
-        return {
-          border: "border-amber-500",
-          bg: "bg-amber-100",
-          text: "text-amber-700",
-        }
-      case "completed":
-        return {
-          border: "border-green-500",
-          bg: "bg-green-100",
-          text: "text-green-700",
-        }
-      case "deleted":
-        return {
-          border: "border-gray-400",
-          bg: "bg-gray-100",
-          text: "text-gray-700",
-        }
-      case "delayed":
-        return {
-          border: "border-red-500",
-          bg: "bg-red-100",
-          text: "text-red-700",
-        }
-      default:
-        return {
-          border: "border-orange-500",
-          bg: "bg-orange-100",
-          text: "text-orange-700",
-        }
-    }
-  }
 
   const getStatusIcon = (status: TodoState) => {
     switch (status) {

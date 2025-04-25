@@ -17,7 +17,7 @@ export type TodoState = `${EStatus}`
 export interface ITodoItem {
     id: string,
     title: string,
-    description: string,
+    description?: string,
     createdAt: Date,
     expiresAt?: Date,
     priority: TodoProirity,

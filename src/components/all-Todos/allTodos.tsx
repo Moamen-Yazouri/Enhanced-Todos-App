@@ -21,7 +21,7 @@ import { StateContext } from "@/providers/state/stateContext"
     }
 
     const handleEdit = (id: string, data: { title: string; description: string }) => {
-
+        
     }
 
     return (
