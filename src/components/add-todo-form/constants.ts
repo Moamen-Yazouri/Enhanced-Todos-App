@@ -1,3 +1,4 @@
+import { EPriority } from "@/@types";
 import { IOptions } from "../motionedSelect/types";
 
 export const OPTIONS: IOptions[] = [
@@ -10,6 +11,6 @@ export const INTIAT_VALUES = {
     title: "",
     description: "",
     expiresAt: "",
-    priority: "",
+    priority: EPriority.MEDIUM,
     hasExpiration: false,
 }

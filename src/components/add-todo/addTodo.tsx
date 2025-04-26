@@ -64,7 +64,6 @@ export default function AddTodoPage() {
             <CardTitle className="text-orange-700">Task Details</CardTitle>
             <CardDescription>Fill in the details for your new task</CardDescription>
             </CardHeader>
-
             <AddTodoForm/>
         </Card>
     </div>

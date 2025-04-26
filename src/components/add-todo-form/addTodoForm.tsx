@@ -25,6 +25,7 @@ const AddTodoForm = () => {
                             label='Title'
                             name='title'
                             isPassword={false}
+                            required={true}
                             placeholder='Enter task title..'
                             styles={
                                 {
@@ -53,6 +54,7 @@ const AddTodoForm = () => {
                             defaultValue={"medium"}
                             placeholder='Select Priority'
                             options = {OPTIONS}
+                            required={true}
                         />
                         {/* Expiration Date Field */}
                     <div className="space-y-4 mb-4">
