@@ -1,21 +1,30 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Button } from '../ui/button'
-import { Form, FormikProvider } from 'formik'
 import MotionedField from '../motionedField/motionedField'
 import MotionedSelect from '../motionedSelect/motionedSelet'
-import { OPTIONS } from './constants'
 import { Label } from '../ui/label'
 import { Checkbox } from '../ui/checkbox'
 import { Save } from 'lucide-react'
-import useAddTodo from './hook/useAddTodoForm'
 import { CardContent, CardFooter } from '../ui/card'
 import MotionedTextArea from '../motionedTextarea/motionedTextarea'
+import { Form, FormikProvider } from 'formik'
+import { OPTIONS } from '@/constants/constants'
+import { Button } from '../ui/button'
+import { TodoProirity } from '@/@types'
+import { FormValues } from '../add-todo-form/types'
+import useEditTodo from './hook/useEditTodo'
+interface IProps {
+    hasExpiration: boolean,
+    setIsEditing: React.Dispatch<React.SetStateAction<boolean>>
+    title: string,
+    description: string,
+    priority: TodoProirity,
+    expiresAt?: Date,
+    id: string
+}
+const EditForm = (props: IProps) => {
 
-
-const AddTodoForm = () => {
-    const [hasExpiration, setHasExpiration] = useState<boolean>(false);
-    const formik = useAddTodo()
+    const [hasExpiration, setHasExpiration] = useState(props.hasExpiration);
+    const formik = useEditTodo({...props})
     return (
         <FormikProvider value={formik}>
             <Form>
@@ -80,26 +89,23 @@ const AddTodoForm = () => {
                                 name='expiresAt'
                                 min={new Date().toISOString().split("T")[0]}
                                 required={hasExpiration}
-
                             />
                         )}
                 </CardContent>
 
 
                 <CardFooter className="flex justify-end space-x-4 pt-4 border-t">
-                    <Link to="/">
-                    <Button variant="outline" type="button">
+                    <Button variant="outline" type="button" onClick={() => props.setIsEditing(false)}>
                         Cancel
                     </Button>
-                    </Link>
                     <Button type="submit" className="bg-orange-500 hover:bg-orange-600 text-white">
                     <Save className="h-4 w-4 mr-2" />
-                    Save Task
+                        Edit Task
                     </Button>
                 </CardFooter>
             </Form>
-        </FormikProvider>        
+        </FormikProvider>  
     )
 }
 
-export default AddTodoForm
+export default EditForm

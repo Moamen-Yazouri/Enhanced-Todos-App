@@ -1,19 +1,18 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { Edit, Trash2, CheckCircle, Clock, Calendar, AlertCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Textarea } from "@/components/ui/textarea"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
-import { ITodoItem } from "@/@types"
+import { ITodoItem, TodoProirity } from "@/@types"
 import { getStatusStyles } from "@/utils/getStyleStatus"
+import { StateContext } from "@/providers/state/stateContext"
 
 export type TodoState = "pending" | "completed" | "deleted" | "delayed"
 
 export interface IProps extends ITodoItem {
-  onComplete: (id: string) => void
-  onDelete: (id: string) => void
-  onEdit: (id: string, data: { title: string; description: string }) => void
+
 }
 
 export default function TodoItem(props: IProps) {
@@ -25,20 +24,18 @@ export default function TodoItem(props: IProps) {
     status,
     createdAt,
     expiresAt,
-    onComplete,
-    onDelete,
-    onEdit,
   } = props;
   const [isEditing, setIsEditing] = useState(false)
-  const [editedTitle, setEditedTitle] = useState(title)
-  const [editedDescription, setEditedDescription] = useState(description)
-
+  const [editedTitle, setEditedTitle] = useState(title);
+  const [editedDescription, setEditedDescription] = useState(description);
+  const [editPriority, setEditedPriority] = useState<TodoProirity>(priority);
+  const {dispatch} = useContext(StateContext)
   const handleComplete = () => {
-    onComplete?.(id)
+    dispatch({type: "COMPLETE_TODO", payload: id});
   }
 
   const handleDelete = () => {
-    onDelete?.(id)
+    dispatch({type: "DELETE_TODO", payload: props})
   }
 
   const handleEdit = () => {

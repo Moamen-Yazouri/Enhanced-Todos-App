@@ -10,7 +10,7 @@ export const OPTIONS: IOptions[] = [
 export const INTIAT_VALUES = {
     title: "",
     description: "",
-    expiresAt: "",
+    expiresAt: new Date(),
     priority: EPriority.MEDIUM,
     hasExpiration: false,
 }

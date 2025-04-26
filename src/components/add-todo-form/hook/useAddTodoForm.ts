@@ -15,12 +15,18 @@ const useAddTodo = () => {
         ) => {
                 dispatch({
                 type: "ADD_TODO",
-                payload: {
+                payload: values.expiresAt ? {
                                 ...values, 
                                 id:uuidv4(), 
                                 createdAt: new Date(), 
                                 status: "pending", 
-                                expiresAt: new Date(values.expiresAt)
+                                expiresAt: new Date(values?.expiresAt)
+                        }
+                        : {
+                                ...values, 
+                                id:uuidv4(), 
+                                createdAt: new Date(), 
+                                status: "pending", 
                         }
                 })
                 setSubmitting(false);

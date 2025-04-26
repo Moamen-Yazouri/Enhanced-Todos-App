@@ -39,7 +39,7 @@ export type Action =
     {type: "ADD_TODO", payload: ITodoItem} |
     {type: "DELETE_TODO", payload:  ITodoItem} |
     {type: "COMPLETE_TODO", payload: string} |
-    {type: "EDIT_TODO", payload: {id: string, newData: ITodoItem}} |
+    {type: "EDIT_TODO", payload: {id: string, newData: Omit<ITodoItem, "id" | "createdAt" | "status">}} |
     {type: "PERMANENT_DELETE", payload: string} |
     {type: "INIT_DATA", payload: IState}
 
@@ -57,4 +57,9 @@ export interface IStateContext {
 
 export interface IContextProps {
     children: React.ReactNode;
+}
+
+export interface IStyle {
+    input: string,
+    label: string,
 }
