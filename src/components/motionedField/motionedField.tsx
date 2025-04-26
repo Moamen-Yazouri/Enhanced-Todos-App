@@ -32,11 +32,9 @@ const motionField = (props: IProps) => {
                     props.label 
                 }
                 {
-                    props.required && (
-                        props.required ? 
-                            <span className="text-red-500 ml-1">*</span>
-                        : <span className="text-gray-400 text-xs ml-1">(optional)</span>
-                    )
+                    props.required
+                        ? <span className="text-red-500 ml-1">*</span>
+                        :<span className="text-gray-400 text-xs ml-1">(optional)</span>
                 }
 
             </Label>
