@@ -28,7 +28,7 @@ const AddTodoForm = () => {
                             isPassword={false}
                             required={true}
                             placeholder='Enter task title..'
-                            styles={
+                            style={
                                 {
                                     label: "text-sm font-medium flex items-center",
                                     input: "focus-visible:ring-orange-500"
@@ -57,24 +57,20 @@ const AddTodoForm = () => {
                         />
                         {/* Expiration Date Field */}
                     <div className="space-y-4 mb-4">
-                        <div className="flex items-center space-x-2">
-                            <Checkbox
-                            id="hasExpiration"
-                            checked={hasExpiration}
-                            onCheckedChange={(checked) => {
-                                setHasExpiration(checked as boolean)
-                            }}
-                            className="text-orange-500 focus:ring-orange-500"
-                            />
-                            <Label htmlFor="hasExpiration" className="text-sm font-medium cursor-pointer">
-                            Set expiration date
-                            </Label>
-                        </div>
+                        <MotionedField
+                            type='checkbox'
+                            label="Set expiration date"
+                            name='hasExpiration'
+                            isPassword={false}
+                            required={false}
+                            onChange={(e) => setHasExpiration(e.target.checked)}
+                        />
                     </div>
 
                         {hasExpiration && (
                             <MotionedField
                                 isPassword={false}
+                                id='expiresAt'
                                 type='date'
                                 label='Expiration Data'
                                 name='expiresAt'

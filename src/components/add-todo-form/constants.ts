@@ -8,9 +8,9 @@ export const OPTIONS: IOptions[] = [
 ]
 
 export const INTIAT_VALUES = {
-    title: "",
-    description: "",
-    expiresAt: new Date(),
+    title: "Test add",
+    description: "ppppppppppppppppppppppppp",
+    expiresAt: new Date("09/04/2026"),
     priority: EPriority.MEDIUM,
     hasExpiration: false,
 }

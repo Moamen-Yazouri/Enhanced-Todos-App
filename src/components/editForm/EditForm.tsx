@@ -36,7 +36,7 @@ const EditForm = (props: IProps) => {
                             isPassword={false}
                             required={true}
                             placeholder='Enter task title..'
-                            styles={
+                            style={
                                 {
                                     label: "text-sm font-medium flex items-center",
                                     input: "focus-visible:ring-orange-500"
