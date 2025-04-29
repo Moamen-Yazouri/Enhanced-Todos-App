@@ -1,54 +1,81 @@
-import { useState } from "react";
+"use client"
+import { useState } from "react"
+import { Input } from "../ui/input"
+import { Label } from "../ui/label"
 import { useField } from "formik"
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { Eye, EyeOff } from "lucide-react";
-import withMotion from "@/HOC/withMotion";
-import { IStyle } from "@/@types";
-
-type IProps = Omit <
+import { Button } from "../ui/button"
+import { Eye, EyeOff } from "lucide-react"
+import withMotion from "@/HOC/withMotion"
+import clsx from "clsx"
+import { IStyle } from "@/@types"
+import { Checkbox } from "../ui/checkbox"
+type CustomTextFieldProps = Omit<
     React.InputHTMLAttributes<HTMLInputElement>,
     "name"
-> &
-{
+>
+& {
     name: string,
-    label: string,
-    isPassword: boolean,
-    styles?: IStyle,
+    label?: string,
+    isPassword?: boolean,
+    style?: IStyle
 }
 
-
-const motionField = (props: IProps) => {
+const CustomTextField : React.FC<CustomTextFieldProps> = ({
+    name,
+    label,
+    isPassword,
+    type,
+    style,
+    ...rest
+}) => {
     const [showPassword, setShowPassword] = useState(false);
-    const [field, meta] = useField<string>(props.name);
-    
+    const [field, meta] = useField<string>(name);
     return (
         <div className="space-y-2">
-            <Label htmlFor={props.name} className={props.styles ? `${props.styles.label}` : "my-2"}>
+            { label && type !== "checkbox" &&(
+                <Label
+                htmlFor={name}
+                className= {clsx(style?.label || "my-2")}
+                >
+                    {label}
+                </Label>
+            )
+            }
+            <div className="relative">
                 {
-                    props.label 
-                }
-                {
-                    props.required
-                        ? <span className="text-red-500 ml-1">*</span>
-                        :<span className="text-gray-400 text-xs ml-1">(optional)</span>
+                    type === "checkbox" ? (
+                        <div className="flex items-center space-x-2">
+                            <Checkbox
+                                id={name}
+                                checked={rest.checked}
+                                {...field}
+                                className={clsx(style?.input || "", meta.error && "border-red-500")}
+                            />
+                            <Label
+                                htmlFor={name}
+                                className= {clsx(style?.label || "my-2")}
+                            >
+                                {label}
+                            </Label>
+                        </div>
+                        
+                    ) : (
+                        <Input
+                            id={name}
+                            {...field}
+                            {...rest}
+                            type={isPassword ? (showPassword ? "text" : "password") : type}
+                            className= {clsx(style?.input || "w-full",)}
+                        />
+                    )
+                    
                 }
 
-            </Label>
-            <div className="relative">
-                <Input
-                    id={props.name}
-                    type={props.isPassword ? (showPassword ? "text" : "password") : props.type}
-                    {...field}
-                    {...props}
-                    className={props.styles ? props.styles.input : "my-2"}
-                />
                 {
-                    props.isPassword && (
+                    isPassword && (
                         <div>
                             <Button
-                                type="button"
+                            type="button"
                                 variant="ghost"
                                 size="icon"
                                 className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 hover:bg-transparent"
@@ -70,6 +97,5 @@ const motionField = (props: IProps) => {
         </div>
     )
 }
-const MotionedField = withMotion(motionField);
-
-export default MotionedField;
+const MotionField = withMotion(CustomTextField);
+export default MotionField;

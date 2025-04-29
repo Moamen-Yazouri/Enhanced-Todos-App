@@ -14,22 +14,27 @@ const useAddTodo = () => {
                 resetForm: () => void,
                 setSubmitting: (submitting: boolean) => void 
         ) => {
-                const newData: ITodoItem = values.expiresAt ? {
-                        ...values, 
-                        id:uuidv4(), 
-                        createdAt: new Date(), 
-                        status: "pending", 
-                        expiresAt: new Date(values.expiresAt)
-                }
+                const todo: ITodoItem = values.expiresAt
+                ? {
+                        id: uuidv4(),
+                        title: values.title,
+                        description: values.description,
+                        priority: values.priority,
+                        createdAt: new Date(),
+                        expiresAt: new Date(values.expiresAt),
+                        status: "pending",
+                        }
                 : {
-                        ...values,
-                        id:uuidv4(),
+                        id: uuidv4(),
+                        title: values.title,
+                        description: values.description,
+                        priority: values.priority,
                         createdAt: new Date(),
                         status: "pending",
-                }
+                        };
                 dispatch({
                 type: "ADD_TODO",
-                payload: newData
+                payload: todo
                 })
                 setSubmitting(false);
                 resetForm();
@@ -38,7 +43,7 @@ const useAddTodo = () => {
 
         const formik = useFormik<FormValues>({
                 initialValues: INTIAT_VALUES,
-                onSubmit(values, {resetForm, setSubmitting}) {
+                onSubmit: (values, {resetForm, setSubmitting}) => {
                         handleAddTodo(values, resetForm, setSubmitting)
                 },
                 validationSchema: validationSchema,
