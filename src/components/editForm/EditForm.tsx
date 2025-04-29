@@ -15,7 +15,7 @@ interface IProps {
     hasExpiration: boolean,
     setIsEditing: React.Dispatch<React.SetStateAction<boolean>>
     title: string,
-    description: string,
+    description?: string,
     priority: TodoProirity,
     expiresAt?: Date,
     id: string

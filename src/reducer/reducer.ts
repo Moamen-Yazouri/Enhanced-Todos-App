@@ -29,7 +29,7 @@ const reducer = (state: IState, action: Action): IState => {
 
         case "EDIT_TODO": {
             const {id, newData} = action.payload;
-            const updatedTodos = state.todos.map((todo) => todo.id === id ? newData : todo);
+            const updatedTodos = state.todos.map((todo) => todo.id === id ? {...todo, ...newData} : todo);
             return {...state, todos: updatedTodos}
         }
 
