@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { ITodoItem, TodoProirity } from "@/@types"
 import { getStatusStyles } from "@/utils/getStyleStatus"
 import { StateContext } from "@/providers/state/stateContext"
+import EditForm from "../editForm/EditForm"
 
 export type TodoState = "pending" | "completed" | "deleted" | "delayed"
 
@@ -159,38 +160,7 @@ export default function TodoItem(props: IProps) {
           <DialogHeader>
             <DialogTitle className="text-orange-700">Edit Todo</DialogTitle>
           </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid gap-2">
-              <label htmlFor="title" className="text-sm font-medium">
-                Title
-              </label>
-              <Input
-                id="title"
-                value={editedTitle}
-                onChange={(e) => setEditedTitle(e.target.value)}
-                className="focus-visible:ring-orange-500"
-              />
-            </div>
-            <div className="grid gap-2">
-              <label htmlFor="description" className="text-sm font-medium">
-                Description
-              </label>
-              <Textarea
-                id="description"
-                value={editedDescription}
-                onChange={(e) => setEditedDescription(e.target.value)}
-                className="focus-visible:ring-orange-500"
-              />
-            </div>
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={handleCancelEdit}>
-              Cancel
-            </Button>
-            <Button onClick={handleSaveEdit} className="bg-orange-500 hover:bg-orange-600 text-white">
-              Save changes
-            </Button>
-          </DialogFooter>
+            <EditForm setIsEditing={setIsEditing} {...props} hasExpiration={expiresAt !== undefined}/>
         </DialogContent>
       </Dialog>
     </>

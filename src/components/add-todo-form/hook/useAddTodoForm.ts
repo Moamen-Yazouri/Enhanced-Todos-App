@@ -14,24 +14,13 @@ const useAddTodo = () => {
                 resetForm: () => void,
                 setSubmitting: (submitting: boolean) => void 
         ) => {
-                const todo: ITodoItem = values.expiresAt
-                ? {
+                const {hasExpiration, ...restValues} = values
+                const todo: ITodoItem = {
+                        ...restValues,
                         id: uuidv4(),
-                        title: values.title,
-                        description: values.description,
-                        priority: values.priority,
-                        createdAt: new Date(),
-                        expiresAt: new Date(values.expiresAt),
+                        createdAt: new Date(), 
                         status: "pending",
-                        }
-                : {
-                        id: uuidv4(),
-                        title: values.title,
-                        description: values.description,
-                        priority: values.priority,
-                        createdAt: new Date(),
-                        status: "pending",
-                        };
+                }
                 dispatch({
                 type: "ADD_TODO",
                 payload: todo
