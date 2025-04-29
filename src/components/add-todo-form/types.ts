@@ -5,6 +5,6 @@ export interface FormValues {
     title: string,
     description: string,
     priority: TodoProirity,
-    expiresAt: string,
+    expiresAt?: Date,
     hasExpiration: boolean
 }

@@ -5,10 +5,8 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Eye, EyeOff } from "lucide-react";
 import withMotion from "@/HOC/withMotion";
-interface IStyle {
-    input: string,
-    label: string,
-}
+import { IStyle } from "@/@types";
+
 type IProps = Omit <
     React.InputHTMLAttributes<HTMLInputElement>,
     "name"
