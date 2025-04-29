@@ -2,9 +2,9 @@ import { FormValues } from "@/components/add-todo-form/types";
 import { useFormik } from "formik";
 import { useContext } from "react";
 import { StateContext } from "@/providers/state/stateContext";
-import { v4 as uuidv4 } from "uuid";
+
 import {toast} from "sonner"
-import { TodoProirity, TodoState } from "@/@types";
+import { TodoProirity } from "@/@types";
 import { validationSchema } from "@/components/add-todo-form/validationSchema";
 interface IProps {
     hasExpiration: boolean,

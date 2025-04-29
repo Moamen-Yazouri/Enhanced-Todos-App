@@ -4,7 +4,7 @@ import { IOptions } from "../motionedSelect/types";
 export const OPTIONS: IOptions[] = [
     {value: "low", label: "Low"},
     {value: "medium", label: "Medium"},
-    {value: "hard", label: "Hard"}
+    {value: "high", label: "High"}
 ]
 
 export const INTIAT_VALUES = {

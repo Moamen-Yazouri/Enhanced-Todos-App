@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { StateContext } from "@/providers/state/stateContext";
 import { v4 as uuidv4 } from "uuid";
 import {toast} from "sonner"
+import { ITodoItem } from "@/@types";
 const useAddTodo = () => {
         const {dispatch} = useContext(StateContext)
         const handleAddTodo = (
@@ -13,21 +14,22 @@ const useAddTodo = () => {
                 resetForm: () => void,
                 setSubmitting: (submitting: boolean) => void 
         ) => {
+                const newData: ITodoItem = values.expiresAt ? {
+                        ...values, 
+                        id:uuidv4(), 
+                        createdAt: new Date(), 
+                        status: "pending", 
+                        expiresAt: new Date(values.expiresAt)
+                }
+                : {
+                        ...values,
+                        id:uuidv4(),
+                        createdAt: new Date(),
+                        status: "pending",
+                }
                 dispatch({
                 type: "ADD_TODO",
-                payload: values.expiresAt ? {
-                                ...values, 
-                                id:uuidv4(), 
-                                createdAt: new Date(), 
-                                status: "pending", 
-                                expiresAt: new Date(values?.expiresAt)
-                        }
-                        : {
-                                ...values, 
-                                id:uuidv4(), 
-                                createdAt: new Date(), 
-                                status: "pending", 
-                        }
+                payload: newData
                 })
                 setSubmitting(false);
                 resetForm();

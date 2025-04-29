@@ -10,7 +10,6 @@ import { Form, FormikProvider } from 'formik'
 import { OPTIONS } from '@/constants/constants'
 import { Button } from '../ui/button'
 import { TodoProirity } from '@/@types'
-import { FormValues } from '../add-todo-form/types'
 import useEditTodo from './hook/useEditTodo'
 interface IProps {
     hasExpiration: boolean,
