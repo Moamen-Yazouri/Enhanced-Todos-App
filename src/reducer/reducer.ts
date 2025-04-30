@@ -13,11 +13,12 @@ const reducer = (state: IState, action: Action): IState => {
 
         case "DELETE_TODO": {
             const id = action.payload.id;
-            const updatedTodos = state.todos.filter((todo) => !(todo.id == id));
+            const updatedTodos = state.todos.filter((todo) => todo.id !== id);
+            const deletedTask: ITodoItem = {...action.payload, status: "deleted"}
             return {
                 ...state, 
                 todos: updatedTodos,
-                deletedTodos: [...state.deletedTodos, action.payload]
+                deletedTodos: [...state.deletedTodos, deletedTask]
             };
         }
 

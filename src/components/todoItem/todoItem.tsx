@@ -36,6 +36,11 @@ export default function TodoItem(props: IProps) {
   }
 
   const handleDelete = () => {
+    console.log("deleted");
+    if(status === "deleted") {
+      dispatch({type: "PERMANENT_DELETE", payload: id});
+      return;
+    }
     dispatch({type: "DELETE_TODO", payload: props})
   }
 
