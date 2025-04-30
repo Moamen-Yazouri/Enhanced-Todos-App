@@ -38,6 +38,21 @@ const reducer = (state: IState, action: Action): IState => {
             const updatedDeleted = state.deletedTodos.filter((del) =>  !(del.id === action.payload));
             return {...state, deletedTodos: updatedDeleted};
         }
+
+        case "RECOVER_TODO": {
+            const recoverdTodo: ITodoItem = {  
+                                    ...action.payload,
+                                    status:  
+                                    action.payload.expiresAt && new Date() < action.payload.expiresAt  ? "pending" : "delayed"  
+                                }
+            const updatedDeleted = state.deletedTodos.filter((todo) => action.payload.id !== todo.id);
+            return {...state, todos: [...state.todos, recoverdTodo], deletedTodos: updatedDeleted};
+        }
+
+        case "SET_DELAYED": {
+            const updatedTodos: ITodoItem[] = state.todos.map((todo) => todo.id === action.payload ? {...todo, status: "delayed"} : todo);
+            return {...state, todos: updatedTodos}
+        }
         default: {return state;}
     }
 }

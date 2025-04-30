@@ -41,7 +41,9 @@ export type Action =
     {type: "COMPLETE_TODO", payload: string} |
     {type: "EDIT_TODO", payload: {id: string, newData: Omit<ITodoItem, "id" | "createdAt" | "status">}} |
     {type: "PERMANENT_DELETE", payload: string} |
-    {type: "INIT_DATA", payload: IState}
+    {type: "INIT_DATA", payload: IState} | 
+    {type: "RECOVER_TODO", payload: ITodoItem} |
+    {type: "SET_DELAYED", payload: string} 
 
 export interface IAuthContext {
     login: (data: IUser) => void,

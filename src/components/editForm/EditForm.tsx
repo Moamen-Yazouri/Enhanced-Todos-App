@@ -9,7 +9,7 @@ import MotionedTextArea from '../motionedTextarea/motionedTextarea'
 import { Form, FormikProvider } from 'formik'
 import { OPTIONS } from '@/constants/constants'
 import { Button } from '../ui/button'
-import { TodoProirity } from '@/@types'
+import { TodoProirity, TodoState } from '@/@types'
 import useEditTodo from './hook/useEditTodo'
 interface IProps {
     hasExpiration: boolean,
@@ -18,7 +18,8 @@ interface IProps {
     description?: string,
     priority: TodoProirity,
     expiresAt?: Date,
-    id: string
+    id: string,
+    status: TodoState,
 }
 const EditForm = (props: IProps) => {
 
@@ -99,7 +100,7 @@ const EditForm = (props: IProps) => {
                     </Button>
                     <Button type="submit" className="bg-orange-500 hover:bg-orange-600 text-white">
                     <Save className="h-4 w-4 mr-2" />
-                        Edit Task
+                        {props.status === "deleted" ?  "Recover task" : "Edit task"}
                     </Button>
                 </CardFooter>
             </Form>

@@ -1,11 +1,8 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Edit, Trash2, CheckCircle, Clock, Calendar, AlertCircle } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Textarea } from "@/components/ui/textarea"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { ITodoItem, TodoProirity } from "@/@types"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { ITodoItem } from "@/@types"
 import { getStatusStyles } from "@/utils/getStyleStatus"
 import { StateContext } from "@/providers/state/stateContext"
 import EditForm from "../editForm/EditForm"
@@ -26,17 +23,24 @@ export default function TodoItem(props: IProps) {
     createdAt,
     expiresAt,
   } = props;
-  const [isEditing, setIsEditing] = useState(false)
-  const [editedTitle, setEditedTitle] = useState(title);
-  const [editedDescription, setEditedDescription] = useState(description);
-  const [editPriority, setEditedPriority] = useState<TodoProirity>(priority);
-  const {dispatch} = useContext(StateContext)
+  const [isEditing, setIsEditing] = useState(false);
+  const [statusDetect, setStatusDetect] = useState<TodoState>(status);
+  const {dispatch} = useContext(StateContext);
   const handleComplete = () => {
     dispatch({type: "COMPLETE_TODO", payload: id});
   }
-
+  useEffect(() => {
+    if (status === "pending" && expiresAt) {
+      const now = new Date();
+      const due = new Date(expiresAt);
+      if (now > due) {
+        setStatusDetect("delayed");
+        dispatch({type: "SET_DELAYED", payload: id});
+      }
+    }
+  }, [status, expiresAt]);
+  
   const handleDelete = () => {
-    console.log("deleted");
     if(status === "deleted") {
       dispatch({type: "PERMANENT_DELETE", payload: id});
       return;
@@ -48,19 +52,10 @@ export default function TodoItem(props: IProps) {
     setIsEditing(true)
   }
 
-  const handleSaveEdit = () => {
-    setIsEditing(false)
-  }
-
-  const handleCancelEdit = () => {
-    setEditedTitle(title)
-    setEditedDescription(description)
-    setIsEditing(false)
-  }
 
 
   const getStatusIcon = (status: TodoState) => {
-    switch (status) {
+    switch (statusDetect) {
       case "pending":
         return {
           icon: <Clock className="h-5 w-5 text-amber-500" />,
@@ -141,7 +136,6 @@ export default function TodoItem(props: IProps) {
           </div>
 
           <div className="flex space-x-1 mt-1">
-            {status !== "deleted" && (
               <>
                 <button className="p-2 rounded-full hover:bg-orange-100 transition" onClick={handleEdit}>
                   <Edit className="h-5 w-5 text-orange-600" />
@@ -155,7 +149,6 @@ export default function TodoItem(props: IProps) {
                   </button>
                 )}
               </>
-            )}
           </div>
         </div>
       </div>

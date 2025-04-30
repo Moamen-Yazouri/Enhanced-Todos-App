@@ -15,6 +15,7 @@ interface IProps {
         priority: TodoProirity,
         expiresAt?: Date,
         id: string,
+        status: string,
 }
 const useEditTodo = (props: IProps) => {
         const {id, setIsEditing,...IntialValues} = props;
@@ -23,11 +24,11 @@ const useEditTodo = (props: IProps) => {
                 values: FormValues,
                 setSubmitting: (submitting: boolean) => void 
         ) => {
-                const {hasExpiration,...restValues} = values
-                console.log(restValues)
+                const {hasExpiration,...restValues} = values;
+
                 dispatch({
                         type: "EDIT_TODO",
-                        payload: {id: props.id, newData: {...values}
+                        payload: {id: props.id, newData: {...restValues}
                 }
                 })
                 setSubmitting(false);
