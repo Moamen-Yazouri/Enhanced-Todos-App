@@ -11,7 +11,6 @@ const StateProvider = (props: IContextProps) => {
     const [loadingData, setLoadingOff] = useState<boolean>(true);
     useLocalStorage("todos",state.todos);
     useLocalStorage("deleted-todos",state.deletedTodos);
-    console.log(state);
 
     useLayoutEffect(() => {
 
