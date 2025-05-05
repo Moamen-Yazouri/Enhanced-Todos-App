@@ -20,6 +20,7 @@ interface IProps {
     expiresAt?: Date,
     id: string,
     status: TodoState,
+    createdAt: Date,
 }
 const EditForm = (props: IProps) => {
 

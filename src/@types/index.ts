@@ -43,7 +43,7 @@ export type Action =
     {type: "PERMANENT_DELETE", payload: string} |
     {type: "INIT_DATA", payload: IState} | 
     {type: "RECOVER_TODO", payload: ITodoItem} |
-    {type: "SET_DELAYED", payload: string} 
+    {type: "SET_DELAYED", payload: string};
 
 export interface IAuthContext {
     login: (data: IUser) => void,

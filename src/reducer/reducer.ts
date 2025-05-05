@@ -43,7 +43,7 @@ const reducer = (state: IState, action: Action): IState => {
             const recoverdTodo: ITodoItem = {  
                                     ...action.payload,
                                     status:  
-                                    action.payload.expiresAt && new Date() < action.payload.expiresAt  ? "pending" : "delayed"  
+                                    "pending",  
                                 }
             const updatedDeleted = state.deletedTodos.filter((todo) => action.payload.id !== todo.id);
             return {...state, todos: [...state.todos, recoverdTodo], deletedTodos: updatedDeleted};
