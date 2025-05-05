@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { StateContext } from "@/providers/state/stateContext";
 
 import {toast} from "sonner"
-import { TodoProirity } from "@/@types";
+import { ITodoItem, TodoProirity, TodoState } from "@/@types";
 import { validationSchema } from "@/components/add-todo-form/validationSchema";
 import { FormValues } from "../types";
 interface IProps {
@@ -15,7 +15,8 @@ interface IProps {
         priority: TodoProirity,
         expiresAt?: Date,
         id: string,
-        status: string,
+        status: TodoState,
+        createdAt: Date,
 }
 const useEditTodo = (props: IProps) => {
         const {id, setIsEditing,...IntialValues} = props;
@@ -25,12 +26,29 @@ const useEditTodo = (props: IProps) => {
                 setSubmitting: (submitting: boolean) => void 
         ) => {
                 const {hasExpiration,...restValues} = values;
+                let editedTodo = restValues;
+
+                if(!values.expiresAt) {
+                        const {expiresAt, ...edited} = restValues;
+                        editedTodo = edited;
+                }
+
+                if(props.status === "deleted") {
+                        const recoverd: ITodoItem = {
+                                ...editedTodo,
+                                id: props.id,
+                                status: props.status,
+                                createdAt: props.createdAt,
+                        }
+                        dispatch({type: "RECOVER_TODO", payload: recoverd})
+                        return
+                }
 
                 dispatch({
                         type: "EDIT_TODO",
                         payload: {id: props.id, newData: {...restValues}
                 }
-                })
+                });
                 setSubmitting(false);
                 props.setIsEditing(false);
                 toast.success("Todo edited successfully");

@@ -29,7 +29,7 @@ const CustomTextField : React.FC<CustomTextFieldProps> = ({
     ...rest
 }) => {
     const [showPassword, setShowPassword] = useState(false);
-    const [field, meta] = useField<string>(name);
+    const [field, meta, helpers] = useField(name);
     return (
         <div className="space-y-2">
             { label && type !== "checkbox" &&(
@@ -47,8 +47,8 @@ const CustomTextField : React.FC<CustomTextFieldProps> = ({
                         <div className="flex items-center space-x-2">
                             <Checkbox
                                 id={name}
-                                checked={rest.checked}
-                                {...field}
+                                checked={!!field.value}
+                                onCheckedChange={(val: boolean) => helpers.setValue(val)}
                                 className={clsx(style?.input || "", meta.error && "border-red-500")}
                             />
                             <Label

@@ -9,11 +9,13 @@ import useAddTodo from './hook/useAddTodoForm'
 import { CardContent, CardFooter } from '../ui/card'
 import MotionedTextArea from '../motionedTextarea/motionedTextarea'
 import { OPTIONS } from '@/constants/constants'
+import { Checkbox } from '../ui/checkbox'
+import { Label } from '../ui/label'
 
 
 const AddTodoForm = () => {
     const [hasExpiration, setHasExpiration] = useState<boolean>(false);
-    const formik = useAddTodo()
+    const formik = useAddTodo();
     return (
         <FormikProvider value={formik}>
             <Form>
@@ -55,14 +57,19 @@ const AddTodoForm = () => {
                         />
                         {/* Expiration Date Field */}
                     <div className="space-y-4 mb-4">
-                        <MotionedField
-                            type='checkbox'
-                            label="Set expiration date"
-                            name='hasExpiration'
-                            isPassword={false}
-                            required={false}
-                            onChange={(e) => setHasExpiration(e.target.checked)}
-                        />
+                        <div className="flex items-center space-x-2">
+                            <Checkbox
+                            id="hasExpiration"
+                            checked={hasExpiration}
+                            onCheckedChange={(checked) => {
+                                setHasExpiration(checked as boolean)
+                            }}
+                            className="text-orange-500 focus:ring-orange-500"
+                            />
+                            <Label htmlFor="hasExpiration" className="text-sm font-medium cursor-pointer">
+                            Set expiration date
+                            </Label>
+                        </div>
                     </div>
 
                         {hasExpiration && (

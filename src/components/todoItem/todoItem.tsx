@@ -29,8 +29,9 @@ export default function TodoItem(props: IProps) {
   const handleComplete = () => {
     dispatch({type: "COMPLETE_TODO", payload: id});
   }
+
   useEffect(() => {
-    if (status === "pending" && expiresAt) {
+    if (expiresAt) {
       const now = new Date();
       const due = new Date(expiresAt);
       if (now > due) {
