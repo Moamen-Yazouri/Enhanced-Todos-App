@@ -14,6 +14,8 @@ import {
 import {Checkbox} from "@/components/ui/checkbox"
 import {AlertCircle, CheckCircle2, ClipboardList} from "lucide-react"
 import {cn} from "@/lib/utils"
+import SignIpForm from "./components/form"
+import SignInForm from "./components/form"
 
 export default function LoginForm() {
     const [email, setEmail] = useState("")
@@ -55,49 +57,7 @@ export default function LoginForm() {
                     <CardDescription className="text-center">Enter your credentials to access your tasks</CardDescription>
                 </CardHeader>
                 <CardContent> 
-                    <form onSubmit={handleSubmit}>
-                        <div className="space-y-4">
-                            <div className="space-y-2">
-                                <Label htmlFor="email">Email</Label>
-                                <Input id="email" type="email" placeholder="your.email@example.com"
-                                    value={email}
-                                    onChange={
-                                        (e) => setEmail(e.target.value)
-                                    }
-                                    required
-                                    className="focus-visible:ring-orange-500"/>
-                            </div>
-                            <div className="space-y-2">
-                                <div className="flex items-center justify-between">
-                                    <Label htmlFor="password">Password</Label>
-                                    <Button variant="link" className="p-0 text-orange-500 h-auto text-xs">
-                                        Forgot password?
-                                    </Button>
-                                </div>
-                                <Input id="password" type="password"
-                                    value={password}
-                                    onChange={
-                                        (e) => setPassword(e.target.value)
-                                    }
-                                    required
-                                    className="focus-visible:ring-orange-500"/>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <Checkbox id="remember"/>
-                                <Label htmlFor="remember" className="text-sm font-normal">
-                                    Remember me
-                                </Label>
-                            </div>
-                            <Button type="submit"
-                                className={
-                                    cn("w-full bg-orange-500 hover:bg-orange-600", isLoading && "opacity-70 cursor-not-allowed")
-                                }
-                                disabled={isLoading}>
-                                {
-                                isLoading ? "Signing in..." : "Sign In"
-                            } </Button>
-                        </div>
-                    </form>
+                <SignInForm />
                 </CardContent>
                 <CardFooter className="flex flex-col space-y-4">
                     <div className="text-center text-sm">

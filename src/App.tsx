@@ -14,7 +14,7 @@ function App() {
     <Routes>
       <Route path='/sign-in' element= {<LoginForm />}/> 
       <Route path='/sign-up' element= {<SignupForm />}/> 
-      <Route path='/tasks' element= {<TaskList />}/> 
+      <Route path='/todos' element= {<TaskList />}/> 
       <Route path='/add-todo' element= {<AddTodo />}/> 
       <Route path='/deleted' element={<DeletedTodos />} />
     </Routes>
