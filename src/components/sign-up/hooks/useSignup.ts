@@ -5,6 +5,7 @@ import { INITIAL_VALUES } from "../constants";
 import { IUser } from "@/@types";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 export const useSignUp = () => {
     const navigate = useNavigate();
@@ -13,12 +14,13 @@ export const useSignUp = () => {
         resetForm: () => void,
         setSubmitting: (isSubmitting: boolean) => void,
     ) => {
-        const user: IUser = {
+        const users = JSON.parse(localStorage.getItem("users") || "[]");
+        const newUser: IUser = {
             name: values.name,
             email: values.email,
             password: values.password
         }
-        localStorage.setItem("users", JSON.stringify(user));
+        localStorage.setItem("users", JSON.stringify([...users, newUser]))
         setTimeout(() => {
             resetForm();
             setSubmitting(false);
