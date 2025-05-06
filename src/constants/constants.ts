@@ -93,10 +93,16 @@ import { EPriority } from "@/@types";
 import { IOptions } from "@/components/motionedSelect/types";
 
 
-export const OPTIONS: IOptions[] = [
+export const PRIORITES: IOptions[] = [
     {value: "low", label: "Low"},
     {value: "medium", label: "Medium"},
     {value: "high", label: "High"}
+]
+export const CATEGORIES: IOptions[] = [
+    {value: "personal", label: "Personal"},
+    {value: "health", label: "Health"},
+    {value: "study", label: "Study"},
+    {value: "work", label: "Work"},
 ]
 
 

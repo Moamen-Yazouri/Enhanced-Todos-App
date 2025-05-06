@@ -39,6 +39,7 @@ import { useContext } from "react"
             deletedTodos.map((todo) => (
                 <TodoItem
                     key={todo.id + todo.status}
+                    category={todo.category}
                     id={todo.id}
                     title={todo.title}
                     description={todo.description}

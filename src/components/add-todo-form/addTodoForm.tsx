@@ -8,7 +8,7 @@ import { Save } from 'lucide-react'
 import useAddTodo from './hook/useAddTodoForm'
 import { CardContent, CardFooter } from '../ui/card'
 import MotionedTextArea from '../motionedTextarea/motionedTextarea'
-import { OPTIONS } from '@/constants/constants'
+import { CATEGORIES, PRIORITES } from '@/constants/constants'
 import { Checkbox } from '../ui/checkbox'
 import { Label } from '../ui/label'
 
@@ -46,13 +46,23 @@ const AddTodoForm = () => {
                                 }
                             }
                         />
+                    
+
+                        <MotionedSelect
+                            label='Category'
+                            name='category'
+                            defaultValue={"personal"}
+                            placeholder='Select Category'
+                            options = {CATEGORIES}
+                            required={true}
+                        />
 
                         <MotionedSelect
                             label='Priority'
                             name='priority'
                             defaultValue={"medium"}
                             placeholder='Select Priority'
-                            options = {OPTIONS}
+                            options = {PRIORITES}
                             required={true}
                         />
                         {/* Expiration Date Field */}

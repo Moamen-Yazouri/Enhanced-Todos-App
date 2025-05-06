@@ -10,6 +10,15 @@ export enum EPriority {
     MEDIUM = "medium",  
     HIGH = "high",
 }
+
+export enum ECategory {
+    Work = "work",
+    Personal = "personal",
+    Study = "study",
+    health = "health",
+}
+
+export type TodoCategory = `${ECategory}`;
 export type TodoProirity = `${EPriority}`;
 
 export type TodoState = `${EStatus}`
@@ -21,6 +30,7 @@ export interface ITodoItem {
     createdAt: Date,
     expiresAt?: Date,
     priority: TodoProirity,
+    category: TodoCategory,
     status: TodoState,
 }
 

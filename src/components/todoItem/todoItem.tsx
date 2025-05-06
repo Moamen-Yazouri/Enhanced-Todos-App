@@ -1,62 +1,49 @@
 import { useContext, useEffect, useState } from "react"
-import { Edit, Trash2, CheckCircle, Clock, Calendar, AlertCircle } from "lucide-react"
+import { Edit, Trash2, CheckCircle, Clock, Calendar, AlertCircle, Briefcase, User, BookOpen, Heart } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { ITodoItem } from "@/@types"
+import type { ITodoItem, TodoCategory, TodoState } from "@/@types"
 import { getStatusStyles } from "@/utils/getStyleStatus"
 import { StateContext } from "@/providers/state/stateContext"
 import EditForm from "../editForm/EditForm"
 
-export type TodoState = "pending" | "completed" | "deleted" | "delayed"
 
-export interface IProps extends ITodoItem {
-
-}
+export interface IProps extends ITodoItem {}
 
 export default function TodoItem(props: IProps) {
-  const {
-    id,
-    title,
-    description,
-    priority,
-    status,
-    createdAt,
-    expiresAt,
-  } = props;
-  const [isEditing, setIsEditing] = useState(false);
+  const { id, title, description, priority, status, category, createdAt, expiresAt } = props
+  const [isEditing, setIsEditing] = useState(false)
   const [statusDetect, setStatusDetect] = useState<TodoState>(status);
-  const {dispatch} = useContext(StateContext);
+  const { dispatch } = useContext(StateContext)
   const handleComplete = () => {
-    dispatch({type: "COMPLETE_TODO", payload: id});
+    dispatch({ type: "COMPLETE_TODO", payload: id })
   }
 
   useEffect(() => {
     if (expiresAt) {
-      const now = new Date();
-      const due = new Date(expiresAt);
+      const now = new Date()
+      const due = new Date(expiresAt)
       if (now > due) {
-        setStatusDetect("delayed");
-        dispatch({type: "SET_DELAYED", payload: id});
+        setStatusDetect("delayed")
+        dispatch({ type: "SET_DELAYED", payload: id })
       }
     }
-  }, [status, expiresAt]);
-  
+  }, [status, expiresAt])
+
   const handleDelete = () => {
-    if(status === "deleted") {
-      dispatch({type: "PERMANENT_DELETE", payload: id});
-      return;
+    if (status === "deleted") {
+      dispatch({ type: "PERMANENT_DELETE", payload: id })
+      return
     }
-    dispatch({type: "DELETE_TODO", payload: props})
+    dispatch({ type: "DELETE_TODO", payload: props })
   }
 
   const handleEdit = () => {
     setIsEditing(true)
   }
 
-
-
   const getStatusIcon = (status: TodoState) => {
-    switch (statusDetect) {
+    switch (status) {
       case "pending":
         return {
           icon: <Clock className="h-5 w-5 text-amber-500" />,
@@ -93,8 +80,44 @@ export default function TodoItem(props: IProps) {
     }
   }
 
-  const statusIcon = getStatusIcon(status)
-  const statusStyle = getStatusStyles(status)
+  const getCategoryBadge = (category: TodoCategory) => {
+
+    switch (category) {
+      case "work":
+        return (
+          <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-200 flex items-center gap-1">
+            <Briefcase className="h-3 w-3" />
+            Work
+          </Badge>
+        )
+      case "personal":
+        return (
+          <Badge className="bg-purple-100 text-purple-800 hover:bg-purple-200 flex items-center gap-1">
+            <User className="h-3 w-3" />
+            Personal
+          </Badge>
+        )
+      case "study":
+        return (
+          <Badge className="bg-green-100 text-green-800 hover:bg-green-200 flex items-center gap-1">
+            <BookOpen className="h-3 w-3" />
+            Study
+          </Badge>
+        )
+      case "health":
+        return (
+          <Badge className="bg-red-100 text-red-800 hover:bg-red-200 flex items-center gap-1">
+            <Heart className="h-3 w-3" />
+            Health
+          </Badge>
+        )
+      default:
+        return null
+    }
+  }
+
+  const statusIcon = getStatusIcon(statusDetect)
+  const statusStyle = getStatusStyles(statusDetect)
 
   return (
     <>
@@ -133,23 +156,24 @@ export default function TodoItem(props: IProps) {
                 {status.charAt(0).toUpperCase() + status.slice(1)}
               </span>
               {priority && getPriorityBadge(priority)}
+              {category && getCategoryBadge(category as TodoCategory)}
             </div>
           </div>
 
           <div className="flex space-x-1 mt-1">
-              <>
-                <button className="p-2 rounded-full hover:bg-orange-100 transition" onClick={handleEdit}>
-                  <Edit className="h-5 w-5 text-orange-600" />
+            <>
+              <button className="p-2 rounded-full hover:bg-orange-100 transition" onClick={handleEdit}>
+                <Edit className="h-5 w-5 text-orange-600" />
+              </button>
+              <button className="p-2 rounded-full hover:bg-orange-100 transition" onClick={handleDelete}>
+                <Trash2 className="h-5 w-5 text-orange-500" />
+              </button>
+              {status === "pending" && (
+                <button className="p-2 rounded-full hover:bg-green-100 transition" onClick={handleComplete}>
+                  <CheckCircle className="h-5 w-5 text-green-500" />
                 </button>
-                <button className="p-2 rounded-full hover:bg-orange-100 transition" onClick={handleDelete}>
-                  <Trash2 className="h-5 w-5 text-orange-500" />
-                </button>
-                {status === "pending" && (
-                  <button className="p-2 rounded-full hover:bg-green-100 transition" onClick={handleComplete}>
-                    <CheckCircle className="h-5 w-5 text-green-500" />
-                  </button>
-                )}
-              </>
+              )}
+            </>
           </div>
         </div>
       </div>
@@ -159,7 +183,7 @@ export default function TodoItem(props: IProps) {
           <DialogHeader>
             <DialogTitle className="text-orange-700">Edit Todo</DialogTitle>
           </DialogHeader>
-            <EditForm setIsEditing={setIsEditing} {...props} hasExpiration={expiresAt !== undefined}/>
+          <EditForm setIsEditing={setIsEditing} {...props} hasExpiration={expiresAt !== undefined} />
         </DialogContent>
       </Dialog>
     </>

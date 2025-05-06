@@ -7,10 +7,10 @@ import { Save } from 'lucide-react'
 import { CardContent, CardFooter } from '../ui/card'
 import MotionedTextArea from '../motionedTextarea/motionedTextarea'
 import { Form, FormikProvider } from 'formik'
-import { OPTIONS } from '@/constants/constants'
 import { Button } from '../ui/button'
-import { TodoProirity, TodoState } from '@/@types'
+import { TodoCategory, TodoProirity, TodoState } from '@/@types'
 import useEditTodo from './hook/useEditTodo'
+import { CATEGORIES, PRIORITES } from '@/constants/constants'
 interface IProps {
     hasExpiration: boolean,
     setIsEditing: React.Dispatch<React.SetStateAction<boolean>>
@@ -19,6 +19,7 @@ interface IProps {
     priority: TodoProirity,
     expiresAt?: Date,
     id: string,
+    category: TodoCategory
     status: TodoState,
     createdAt: Date,
 }
@@ -56,13 +57,21 @@ const EditForm = (props: IProps) => {
                                 }
                             }
                         />
+                        <MotionedSelect
+                            label='Category'
+                            name='category'
+                            defaultValue={"personal"}
+                            placeholder='Select Category'
+                            options = {CATEGORIES}
+                            required={true}
+                        />
 
                         <MotionedSelect
                             label='Priority'
                             name='priority'
                             defaultValue={"medium"}
                             placeholder='Select Priority'
-                            options = {OPTIONS}
+                            options = {PRIORITES}
                             required={true}
                         />
                         {/* Expiration Date Field */}
