@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { StateContext } from "@/providers/state/stateContext";
 
 import {toast} from "sonner"
-import { ITodoItem, TodoProirity, TodoState } from "@/@types";
+import { ITodoItem, TodoCategory, TodoProirity, TodoState } from "@/@types";
 import { validationSchema } from "@/components/add-todo-form/validationSchema";
 import { FormValues } from "../types";
 interface IProps {
@@ -15,6 +15,7 @@ interface IProps {
         priority: TodoProirity,
         expiresAt?: Date,
         id: string,
+        category: TodoCategory
         status: TodoState,
         createdAt: Date,
 }

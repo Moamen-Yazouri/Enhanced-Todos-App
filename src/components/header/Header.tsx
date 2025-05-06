@@ -12,7 +12,7 @@ import { Link, useLocation } from "react-router-dom"
     const pathname = useLocation().pathname;
 
     const navigation = [
-        { name: "My Tasks", href: "/tasks", icon: CheckSquare },
+        { name: "My Tasks", href: "/todos", icon: CheckSquare },
         { name: "Deleted Tasks", href: "/deleted", icon: Trash2 },
         { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
     ]

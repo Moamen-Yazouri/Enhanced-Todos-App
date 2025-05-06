@@ -1,4 +1,4 @@
-import { EPriority } from "@/@types";
+import { ECategory, EPriority } from "@/@types";
 import { IOptions } from "../motionedSelect/types";
 
 export const INTIAT_VALUES = {
@@ -7,4 +7,5 @@ export const INTIAT_VALUES = {
     expiresAt: undefined,
     priority: EPriority.MEDIUM,
     hasExpiration: false,
+    category: ECategory.Personal,
 }

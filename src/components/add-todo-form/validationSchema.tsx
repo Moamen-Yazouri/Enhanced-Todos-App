@@ -13,6 +13,10 @@ export const validationSchema = yup.object({
     priority: yup.string()
                 .required("priority is required!")
                 .oneOf(["high", "medium", "low"], "Invalid priority value!"),
+    category: yup.string()
+                .required("priority is required!")
+                .oneOf(["work", "health", "personal", "study"], "Invalid priority value!"),
+
     expiresAt: yup.date().min(tomorrow, "Date must be after today")
 
 })

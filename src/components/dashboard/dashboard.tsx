@@ -3,33 +3,25 @@
 import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Line,
-  LineChart,
-  PieChart,
-  Pie,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts"
+import { Bar, BarChart, CartesianGrid, Cell, PieChart, Pie, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { CheckCircle2, Clock, ClipboardList, ListTodo, User } from "lucide-react"
+import { CheckCircle2, Clock, ClipboardList, ListTodo, User, AlertTriangle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
-// Mock data for the dashboard
-const taskCompletionData = [
-  { day: "Mon", completed: 5, pending: 3 },
-  { day: "Tue", completed: 7, pending: 4 },
-  { day: "Wed", completed: 4, pending: 6 },
-  { day: "Thu", completed: 8, pending: 2 },
-  { day: "Fri", completed: 6, pending: 3 },
-  { day: "Sat", completed: 3, pending: 1 },
-  { day: "Sun", completed: 2, pending: 2 },
+// Priority distribution data - overall counts by priority
+const priorityDistributionData = [
+  { name: "High", value: 16, fill: "#ef4444" },
+  { name: "Medium", value: 23, fill: "#f97316" },
+  { name: "Low", value: 17, fill: "#3b82f6" },
+]
+
+// Task status data - all four statuses
+const taskStatusData = [
+  { name: "Completed", value: 35, fill: "#22c55e" },
+  { name: "Pending", value: 15, fill: "#f59e0b" },
+  { name: "Deleted", value: 8, fill: "#6b7280" },
+  { name: "Delayed", value: 6, fill: "#ef4444" },
 ]
 
 const taskCategoryData = [
@@ -41,6 +33,18 @@ const taskCategoryData = [
 
 export default function TaskDashboard() {
   const [activeTab, setActiveTab] = useState("overview")
+
+  // Calculate total tasks
+  const totalTasks = taskStatusData.reduce((sum, item) => sum + item.value, 0)
+
+  // Get individual status counts
+  const completedTasks = taskStatusData.find((item) => item.name === "Completed")?.value || 0
+  const pendingTasks = taskStatusData.find((item) => item.name === "Pending")?.value || 0
+  const deletedTasks = taskStatusData.find((item) => item.name === "Deleted")?.value || 0
+  const delayedTasks = taskStatusData.find((item) => item.name === "Delayed")?.value || 0
+
+  // Calculate completion rate
+  const completionRate = Math.round((completedTasks / totalTasks) * 100)
 
   return (
     <div className="flex min-h-screen flex-col bg-gray-50">
@@ -95,7 +99,7 @@ export default function TaskDashboard() {
                     <ClipboardList className="h-4 w-4 text-orange-500" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">28</div>
+                    <div className="text-2xl font-bold">{totalTasks}</div>
                     <p className="text-xs text-muted-foreground">+4 from last week</p>
                   </CardContent>
                 </Card>
@@ -105,27 +109,27 @@ export default function TaskDashboard() {
                     <CheckCircle2 className="h-4 w-4 text-green-500" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">17</div>
-                    <p className="text-xs text-muted-foreground">61% completion rate</p>
+                    <div className="text-2xl font-bold">{completedTasks}</div>
+                    <p className="text-xs text-muted-foreground">{completionRate}% completion rate</p>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-sm font-medium">Pending</CardTitle>
-                    <Clock className="h-4 w-4 text-orange-500" />
+                    <Clock className="h-4 w-4 text-amber-500" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">8</div>
-                    <p className="text-xs text-muted-foreground">3 due today</p>
+                    <div className="text-2xl font-bold">{pendingTasks}</div>
+                    <p className="text-xs text-muted-foreground">5 due today</p>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
-                    <CardTitle className="text-sm font-medium">Overdue</CardTitle>
-                    <Clock className="h-4 w-4 text-red-500" />
+                    <CardTitle className="text-sm font-medium">Delayed</CardTitle>
+                    <AlertTriangle className="h-4 w-4 text-red-500" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">3</div>
+                    <div className="text-2xl font-bold">{delayedTasks}</div>
                     <p className="text-xs text-muted-foreground">Action required</p>
                   </CardContent>
                 </Card>
@@ -135,40 +139,32 @@ export default function TaskDashboard() {
               <div className="grid gap-4 md:grid-cols-2">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Weekly Task Completion</CardTitle>
-                    <CardDescription>Tasks completed vs pending this week</CardDescription>
+                    <CardTitle>Priority Distribution</CardTitle>
+                    <CardDescription>Tasks by priority level</CardDescription>
                   </CardHeader>
                   <CardContent className="pt-2">
-                    <ChartContainer
-                      config={{
-                        completed: {
-                          label: "Completed",
-                          color: "hsl(24, 94%, 53%)",
-                        },
-                        pending: {
-                          label: "Pending",
-                          color: "hsl(220, 13%, 91%)",
-                        },
-                      }}
-                      className="aspect-[4/3]"
-                    >
-                      <BarChart
-                        data={taskCompletionData}
-                        margin={{
-                          top: 16,
-                          right: 16,
-                          bottom: 16,
-                          left: 16,
-                        }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                        <XAxis dataKey="day" />
-                        <YAxis />
-                        <ChartTooltip content={<ChartTooltipContent />} cursor={{ fill: "var(--chart-grid)" }} />
-                        <Bar dataKey="completed" stackId="a" fill="var(--color-completed)" radius={[4, 4, 0, 0]} />
-                        <Bar dataKey="pending" stackId="a" fill="var(--color-pending)" radius={[4, 4, 0, 0]} />
-                      </BarChart>
-                    </ChartContainer>
+                    <div className="aspect-[4/3] w-full">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <PieChart>
+                          <Pie
+                            data={priorityDistributionData}
+                            cx="50%"
+                            cy="50%"
+                            innerRadius={60}
+                            outerRadius={80}
+                            paddingAngle={2}
+                            dataKey="value"
+                            label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                            labelLine={false}
+                          >
+                            {priorityDistributionData.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={entry.fill} />
+                            ))}
+                          </Pie>
+                          <Tooltip formatter={(value, name) => [`${value} tasks`, `${name} Priority`]} />
+                        </PieChart>
+                      </ResponsiveContainer>
+                    </div>
                   </CardContent>
                 </Card>
                 <Card>
@@ -190,7 +186,11 @@ export default function TaskDashboard() {
                             dataKey="value"
                             label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                             labelLine={false}
-                          />
+                          >
+                            {taskCategoryData.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={entry.fill} />
+                            ))}
+                          </Pie>
                           <Tooltip />
                         </PieChart>
                       </ResponsiveContainer>
@@ -201,50 +201,75 @@ export default function TaskDashboard() {
             </TabsContent>
 
             <TabsContent value="analytics" className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Task Completion Trend</CardTitle>
-                  <CardDescription>Task completion rate over the past week</CardDescription>
-                </CardHeader>
-                <CardContent className="pt-2">
-                  <ChartContainer
-                    config={{
-                      completed: {
-                        label: "Completed",
-                        color: "hsl(24, 94%, 53%)",
-                      },
-                      pending: {
-                        label: "Pending",
-                        color: "hsl(220, 13%, 91%)",
-                      },
-                    }}
-                    className="aspect-[3/2]"
-                  >
-                    <LineChart
-                      data={taskCompletionData}
-                      margin={{
-                        top: 16,
-                        right: 16,
-                        bottom: 16,
-                        left: 16,
+              <div className="grid gap-4 md:grid-cols-2">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Priority Breakdown</CardTitle>
+                    <CardDescription>Detailed view of task priorities</CardDescription>
+                  </CardHeader>
+                  <CardContent className="pt-2">
+                    <ChartContainer
+                      config={{
+                        value: {
+                          label: "Tasks",
+                          color: "hsl(24, 94%, 53%)",
+                        },
                       }}
+                      className="aspect-[3/2]"
                     >
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                      <XAxis dataKey="day" />
-                      <YAxis />
-                      <ChartTooltip content={<ChartTooltipContent />} />
-                      <Line
-                        type="monotone"
-                        dataKey="completed"
-                        stroke="var(--color-completed)"
-                        strokeWidth={2}
-                        activeDot={{ r: 8 }}
-                      />
-                      <Line type="monotone" dataKey="pending" stroke="var(--color-pending)" strokeWidth={2} />
-                    </LineChart>
-                  </ChartContainer>
-                </CardContent>
-              </Card>
+                      <BarChart
+                        data={priorityDistributionData}
+                        margin={{
+                          top: 16,
+                          right: 16,
+                          bottom: 16,
+                          left: 16,
+                        }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <ChartTooltip content={<ChartTooltipContent hideLabel />} />
+                        <Bar dataKey="value" radius={[4, 4, 0, 0]} fill="var(--color-value)">
+                          {priorityDistributionData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={entry.fill} />
+                          ))}
+                        </Bar>
+                      </BarChart>
+                    </ChartContainer>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Task Status Distribution</CardTitle>
+                    <CardDescription>Overview of all task statuses</CardDescription>
+                  </CardHeader>
+                  <CardContent className="pt-2">
+                    <div className="aspect-[3/2] w-full">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <PieChart>
+                          <Pie
+                            data={taskStatusData}
+                            cx="50%"
+                            cy="50%"
+                            innerRadius={70}
+                            outerRadius={90}
+                            paddingAngle={2}
+                            dataKey="value"
+                            label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                            labelLine={false}
+                          >
+                            {taskStatusData.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={entry.fill} />
+                            ))}
+                          </Pie>
+                          <Tooltip formatter={(value, name) => [`${value} tasks`, name]} />
+                        </PieChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
             </TabsContent>
           </Tabs>
         </div>
