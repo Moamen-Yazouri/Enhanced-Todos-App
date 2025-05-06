@@ -62,6 +62,6 @@ export interface IContextProps {
 }
 
 export interface IStyle {
-    input: string,
-    label: string,
+    input?: string,
+    label?: string,
 }

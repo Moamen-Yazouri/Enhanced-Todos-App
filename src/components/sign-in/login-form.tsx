@@ -54,24 +54,7 @@ export default function LoginForm() {
                     <CardTitle className="text-2xl font-bold text-center">Enhanced Todo List</CardTitle>
                     <CardDescription className="text-center">Enter your credentials to access your tasks</CardDescription>
                 </CardHeader>
-                <CardContent> {
-                    error && (
-                        <div className="mb-4 flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-600">
-                            <AlertCircle className="h-4 w-4"/>
-                            <span>{error}</span>
-                        </div>
-                    )
-                }
-
-                    {
-                    success && (
-                        <div className="mb-4 flex items-center gap-2 rounded-lg border border-green-200 bg-green-50 p-3 text-sm text-green-600">
-                            <CheckCircle2 className="h-4 w-4"/>
-                            <span>Login successful! Redirecting...</span>
-                        </div>
-                    )
-                }
-
+                <CardContent> 
                     <form onSubmit={handleSubmit}>
                         <div className="space-y-4">
                             <div className="space-y-2">
