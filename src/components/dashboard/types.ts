@@ -1,4 +1,4 @@
-export interface ICategoryData {
+export interface IDashboardData {
     name: string,
     value: number,
     fill: string,
