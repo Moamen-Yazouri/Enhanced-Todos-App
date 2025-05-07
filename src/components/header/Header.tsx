@@ -1,22 +1,24 @@
     "use client"
 
-    import { useState } from "react"
-    import { Menu, CheckSquare, Trash2, LayoutDashboard, LogIn } from "lucide-react"
+    import { useContext, useState } from "react"
+    import { Menu, CheckSquare, Trash2, LayoutDashboard, LogIn, Loader2, User } from "lucide-react"
     import { Button } from "@/components/ui/button"
     import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet"
     import { cn } from "@/lib/utils"
 import { Link, useLocation } from "react-router-dom"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"
+import { AuthContext } from "@/providers/auth/authContext"
 
     export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const pathname = useLocation().pathname;
-
+    const {user, logout, isLoading} = useContext(AuthContext)
     const navigation = [
         { name: "My Tasks", href: "/todos", icon: CheckSquare },
         { name: "Deleted Tasks", href: "/deleted", icon: Trash2 },
         { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
     ]
-
+    
     const isActive = (path: string) => {
         return pathname === path
     }
@@ -52,15 +54,33 @@ import { Link, useLocation } from "react-router-dom"
             <div className="flex items-center gap-2">
             {/* Auth Buttons */}
             <div className="hidden md:flex items-center gap-2">
-                <Button variant="outline" size="sm" asChild>
-                <Link to="/sign-in">
-                    <LogIn className="h-4 w-4 mr-1" />
-                    Login
-                </Link>
-                </Button>
-                <Button variant="secondary" size="sm" asChild>
-                <Link to="/sign-up">Sign Up</Link>
-                </Button>
+                    {
+                    user ? (
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild className="cursor-pointer">
+                                <Button variant="ghost" className="flex items-center gap-2">
+                                    <User className="h-4 w-4 text-orange-500"/> {
+                                    user.email
+                                } </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuItem className="cursor-pointer" onClick={logout}>Logout</DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    ) : (
+                        <div className="hidden md:flex items-center gap-2">
+                            <Button variant="outline" size="sm" asChild>
+                            <Link to="/sign-in">
+                                <LogIn className="h-4 w-4 mr-1" />
+                                Login
+                            </Link>
+                            </Button>
+                            <Button variant="secondary" size="sm" asChild>
+                            <Link to="/sign-up">Sign Up</Link>
+                            </Button>
+                        </div>
+                    )
+                }
             </div>
 
             {/* Mobile Menu Button */}

@@ -58,7 +58,8 @@ export type Action =
 export interface IAuthContext {
     login: (data: IUser) => void,
     logout: () => void,
-    user: IUser | null, 
+    user: IUser | null,
+    isLoading: boolean
 }
 
 export interface IStateContext {
