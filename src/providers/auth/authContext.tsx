@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { IAuthContext, IContextProps, IUser } from "../../@types";
 import { INITIAL_CONTEXT } from "./constants";
 import useLocalStorage from "../../hooks/useLocalStorage";
@@ -7,11 +7,13 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 const AuthContext = createContext<IAuthContext> (INITIAL_CONTEXT);
 
 const AuthProvider = (props: IContextProps) => {
-    const rawUser = localStorage.getItem("authed-user");
-    const storedUser = rawUser ? JSON.parse(rawUser) : null;
-    const [user, setUser] = useState<IUser | null>(storedUser);
-    useLocalStorage("authed-user", user);
-
+    const [user, setUser] = useState<IUser | null>(null);
+    const [isLoading, setIsLoading] = useState(true) 
+    const {storedData} =  useLocalStorage("authed-user", user);
+    useEffect(() => {
+        setUser(storedData);
+        setIsLoading(false);
+    }, [])
     const login = (data: IUser) => {
         setUser(data);
     }
@@ -20,7 +22,7 @@ const AuthProvider = (props: IContextProps) => {
         setUser(null);
     }
 
-    const value: IAuthContext = {user, login, logout};
+    const value: IAuthContext = {user, login, logout, isLoading};
 
     return <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>
 }

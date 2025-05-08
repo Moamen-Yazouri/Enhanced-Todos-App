@@ -1,5 +1,6 @@
 export const INITIAL_CONTEXT = {
     login: () => {},
     logout: () => {},
-    user: null
+    user: null,
+    isLoading: false,
 }

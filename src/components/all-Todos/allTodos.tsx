@@ -9,8 +9,7 @@ import { useContext } from "react"
 
     export default function AllTodos() {
     const {state} = useContext(StateContext);
-    const todos = state.todos
-    console.log("Hi")
+    const todos = state.todos || [];
     return (
         <div className="max-w-3xl mx-auto p-4">
         <div className="flex justify-between items-center mb-6">

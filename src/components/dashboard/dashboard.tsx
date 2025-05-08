@@ -16,18 +16,19 @@ import { IDashboardData } from "./types"
 
 export default function TaskDashboard() {
   const [activeTab, setActiveTab] = useState("overview")
-  const {state} = useContext(StateContext)
-
+  const {state} = useContext(StateContext) 
+  const todos = state.todos;
+  const deletedTodos = state.deletedTodos
   const taskStatusData: IDashboardData[] = useMemo(() => {
-    return getStatusData(state.todos);
+    return getStatusData([...todos, ...deletedTodos]);
   }, [state]);
 
   const priorityDistributionData: IDashboardData[] = useMemo(() => {
-    return getPriorityData(state.todos);
+    return getPriorityData(todos);
   }, [state]);
 
   const taskCategoryData: IDashboardData[] = useMemo(() => {
-    return getCategorydata(state.todos);
+    return getCategorydata([...todos, ...deletedTodos]);
   }, [state])
 
   const totalTasks = taskStatusData.reduce((sum, item) => sum + item.value, 0);
@@ -128,6 +129,16 @@ export default function TaskDashboard() {
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">{delayedTasks}</div>
+                    <p className="text-xs text-muted-foreground">Action required</p>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between pb-2">
+                    <CardTitle className="text-sm font-medium">Deleted</CardTitle>
+                    <AlertTriangle className="h-4 w-4 text-red-500" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">{deletedTasks}</div>
                     <p className="text-xs text-muted-foreground">Action required</p>
                   </CardContent>
                 </Card>

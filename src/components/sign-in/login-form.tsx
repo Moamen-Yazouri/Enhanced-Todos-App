@@ -11,10 +11,9 @@ import {
     CardHeader,
     CardTitle
 } from "@/components/ui/card"
-import {Checkbox} from "@/components/ui/checkbox"
-import {AlertCircle, CheckCircle2, ClipboardList} from "lucide-react"
-import {cn} from "@/lib/utils"
-import SignIpForm from "./components/form"
+import {ClipboardList} from "lucide-react"
+
+
 import SignInForm from "./components/form"
 
 export default function LoginForm() {

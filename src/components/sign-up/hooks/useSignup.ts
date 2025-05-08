@@ -5,7 +5,6 @@ import { INITIAL_VALUES } from "../constants";
 import { IUser } from "@/@types";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
-import useLocalStorage from "@/hooks/useLocalStorage";
 
 export const useSignUp = () => {
     const navigate = useNavigate();
