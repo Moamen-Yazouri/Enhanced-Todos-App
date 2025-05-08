@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useContext, useMemo, useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Bar, BarChart, CartesianGrid, Cell, PieChart, Pie, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
@@ -8,40 +8,38 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/
 import { CheckCircle2, Clock, ClipboardList, ListTodo, User, AlertTriangle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { getCategorydata, getPriorityData, getStatusData, todosStatistics } from "@/utils/dashboard"
+import { StateContext } from "@/providers/state/stateContext"
+import { IDashboardData } from "./types"
 
-// Priority distribution data - overall counts by priority
-const priorityDistributionData = [
-  { name: "High", value: 16, fill: "#ef4444" },
-  { name: "Medium", value: 23, fill: "#f97316" },
-  { name: "Low", value: 17, fill: "#3b82f6" },
-]
 
-// Task status data - all four statuses
-const taskStatusData = [
-  { name: "Completed", value: 35, fill: "#22c55e" },
-  { name: "Pending", value: 15, fill: "#f59e0b" },
-  { name: "Deleted", value: 8, fill: "#6b7280" },
-  { name: "Delayed", value: 6, fill: "#ef4444" },
-]
-
-const taskCategoryData = [
-  { name: "Work", value: 12, fill: "#f97316" },
-  { name: "Personal", value: 8, fill: "#fb923c" },
-  { name: "Study", value: 5, fill: "#fdba74" },
-  { name: "Health", value: 3, fill: "#ffedd5" },
-]
 
 export default function TaskDashboard() {
   const [activeTab, setActiveTab] = useState("overview")
+  const {state} = useContext(StateContext)
 
-  // Calculate total tasks
-  const totalTasks = taskStatusData.reduce((sum, item) => sum + item.value, 0)
+  const taskStatusData: IDashboardData[] = useMemo(() => {
+    return getStatusData(state.todos);
+  }, [state]);
 
-  // Get individual status counts
-  const completedTasks = taskStatusData.find((item) => item.name === "Completed")?.value || 0
-  const pendingTasks = taskStatusData.find((item) => item.name === "Pending")?.value || 0
-  const deletedTasks = taskStatusData.find((item) => item.name === "Deleted")?.value || 0
-  const delayedTasks = taskStatusData.find((item) => item.name === "Delayed")?.value || 0
+  const priorityDistributionData: IDashboardData[] = useMemo(() => {
+    return getPriorityData(state.todos);
+  }, [state]);
+
+  const taskCategoryData: IDashboardData[] = useMemo(() => {
+    return getCategorydata(state.todos);
+  }, [state])
+
+  const totalTasks = taskStatusData.reduce((sum, item) => sum + item.value, 0);
+
+  const {
+    completedTasks,
+    pendingTasks,
+    deletedTasks,
+    delayedTasks,
+  } = useMemo(() => {
+    return todosStatistics(state.todos);
+  }, [state])
 
   // Calculate completion rate
   const completionRate = Math.round((completedTasks / totalTasks) * 100)
