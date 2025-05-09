@@ -16,8 +16,8 @@ const SignupForm = () => {
                     placeholder='John Doe'
                     label='Full name'
                     style={{
-                        input: "focus-visible:ring-orange-500",
-                        label: undefined
+                        input: "bg-white/30 border-white/20 focus-visible:ring-orange-300 focus-visible:border-orange-300",
+                        label: "text-foreground"
                     }}
                     required={true}
                 />
@@ -28,8 +28,8 @@ const SignupForm = () => {
                     placeholder='jhon@example.com'
                     label='Email'
                     style={{
-                        input: "focus-visible:ring-orange-500",
-                        label: undefined
+                        input: "bg-white/30 border-white/20 focus-visible:ring-orange-300 focus-visible:border-orange-300",
+                        label: "text-foreground"
                     }}
                     required={true}
                 />
@@ -37,16 +37,16 @@ const SignupForm = () => {
                     name="password"
                     placeholder="••••••••"
                     label="Password"
-                    isPassword
+                    isPassword= {true}
                 />
                 <MotionField
                     name="confirmPassword"
                     placeholder="••••••••"
                     label="Confirm Password"
-                    isPassword
+                    isPassword= {true}
                 />
                 <Button
-                    className="cursor-pointer w-full bg-orange-500 text-white hover:bg-orange-300 mt-2"
+                    className="w-full bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white border-none"
                     type="submit" 
                 >
                     {formik.isSubmitting ? (
