@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { ClipboardList } from "lucide-react"
 import SignInForm from "./components/form"
+import AnimatedLogo from "../animated-logo/animatedLogo"
 
 export default function LoginForm() {
 const [email, setEmail] = useState("")
@@ -37,22 +38,21 @@ const handleSubmit = async (e: React.FormEvent) => {
 }
 
 return (
-    <div className="flex min-h-screen items-center justify-center p-4 relative overflow-hidden">
+    <div className="flex min-h-screen items-center justify-start p-4 relative overflow-hidden flex-col">
     {/* Animated background elements */}
+    <div className="flex items-center justify-center">
+    
+        <AnimatedLogo size={150} darkMode={true}/>
+
+    </div>
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 -left-20 w-64 h-64 rounded-full bg-orange-500/20 blur-3xl opacity-70"></div>
         <div className="absolute bottom-1/4 -right-20 w-80 h-80 rounded-full bg-rose-500/20 blur-3xl opacity-70"></div>
     </div>
-
     <Card className="w-full max-w-md shadow-lg glass border-white/20 backdrop-blur-sm">
         <CardHeader className="space-y-1">
-        <div className="flex items-center justify-center mb-2">
-            <div className="p-3 rounded-full bg-gradient-to-br from-orange-500/20 to-rose-500/20 backdrop-blur-sm">
-            <ClipboardList className="h-10 w-10 text-orange-500" />
-            </div>
-        </div>
         <CardTitle className="text-2xl font-bold text-center bg-gradient-to-r from-orange-500 to-rose-500 bg-clip-text text-transparent drop-shadow-sm">
-            Enhanced Todo List
+            Sign In
         </CardTitle>
         <CardDescription className="text-center">Enter your credentials to access your tasks</CardDescription>
         </CardHeader>
