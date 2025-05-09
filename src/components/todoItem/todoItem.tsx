@@ -1,20 +1,21 @@
+"use client"
+
 import { useContext, useEffect, useState } from "react"
 import { Edit, Trash2, CheckCircle, Clock, Calendar, AlertCircle, Briefcase, User, BookOpen, Heart } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import type { ITodoItem, TodoCategory, TodoState } from "@/@types"
-import { getStatusStyles } from "@/utils/getStyleStatus"
 import { StateContext } from "@/providers/state/stateContext"
 import EditForm from "../editForm/EditForm"
-
 
 export interface IProps extends ITodoItem {}
 
 export default function TodoItem(props: IProps) {
   const { id, title, description, priority, status, category, createdAt, expiresAt } = props
   const [isEditing, setIsEditing] = useState(false)
-  const [statusDetect, setStatusDetect] = useState<TodoState>(status);
+  const [statusDetect, setStatusDetect] = useState<TodoState>(status)
   const { dispatch } = useContext(StateContext)
+
   const handleComplete = () => {
     dispatch({ type: "COMPLETE_TODO", payload: id })
   }
@@ -54,7 +55,7 @@ export default function TodoItem(props: IProps) {
         }
       case "deleted":
         return {
-          icon: <Trash2 className="h-5 w-5 text-gray-500" />,
+          icon: <Trash2 className="h-5 w-5 text-gray-400" />,
         }
       case "delayed":
         return {
@@ -70,43 +71,42 @@ export default function TodoItem(props: IProps) {
   const getPriorityBadge = (priority: string) => {
     switch (priority) {
       case "high":
-        return <Badge className="bg-red-500 hover:bg-red-600">High</Badge>
+        return <Badge className="bg-red-500/80 hover:bg-red-500 text-white">High</Badge>
       case "medium":
-        return <Badge className="bg-orange-500 hover:bg-orange-600">Medium</Badge>
+        return <Badge className="bg-orange-500/80 hover:bg-orange-500 text-white">Medium</Badge>
       case "low":
-        return <Badge className="bg-blue-500 hover:bg-blue-600">Low</Badge>
+        return <Badge className="bg-blue-500/80 hover:bg-blue-500 text-white">Low</Badge>
       default:
         return null
     }
   }
 
   const getCategoryBadge = (category: TodoCategory) => {
-
     switch (category) {
       case "work":
         return (
-          <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-200 flex items-center gap-1">
+          <Badge className="bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 flex items-center gap-1 border-none">
             <Briefcase className="h-3 w-3" />
             Work
           </Badge>
         )
       case "personal":
         return (
-          <Badge className="bg-purple-100 text-purple-800 hover:bg-purple-200 flex items-center gap-1">
+          <Badge className="bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 flex items-center gap-1 border-none">
             <User className="h-3 w-3" />
             Personal
           </Badge>
         )
       case "study":
         return (
-          <Badge className="bg-green-100 text-green-800 hover:bg-green-200 flex items-center gap-1">
+          <Badge className="bg-green-500/20 text-green-400 hover:bg-green-500/30 flex items-center gap-1 border-none">
             <BookOpen className="h-3 w-3" />
             Study
           </Badge>
         )
       case "health":
         return (
-          <Badge className="bg-red-100 text-red-800 hover:bg-red-200 flex items-center gap-1">
+          <Badge className="bg-red-500/20 text-red-400 hover:bg-red-500/30 flex items-center gap-1 border-none">
             <Heart className="h-3 w-3" />
             Health
           </Badge>
@@ -116,13 +116,49 @@ export default function TodoItem(props: IProps) {
     }
   }
 
+  // Updated status styles for dark theme
+  const getDarkStatusStyles = (status: TodoState) => {
+    switch (status) {
+      case "pending":
+        return {
+          border: "border-amber-500",
+          bg: "bg-amber-500/20",
+          text: "text-amber-400",
+        }
+      case "completed":
+        return {
+          border: "border-green-500",
+          bg: "bg-green-500/20",
+          text: "text-green-400",
+        }
+      case "deleted":
+        return {
+          border: "border-gray-600",
+          bg: "bg-gray-500/20",
+          text: "text-gray-400",
+        }
+      case "delayed":
+        return {
+          border: "border-red-500",
+          bg: "bg-red-500/20",
+          text: "text-red-400",
+        }
+      default:
+        return {
+          border: "border-orange-500",
+          bg: "bg-orange-500/20",
+          text: "text-orange-400",
+        }
+    }
+  }
+
   const statusIcon = getStatusIcon(statusDetect)
-  const statusStyle = getStatusStyles(statusDetect)
+  const statusStyle = getDarkStatusStyles(statusDetect)
 
   return (
     <>
       <div
-        className={`rounded-xl bg-white p-5 shadow-sm border-l-4 hover:shadow-md transition-shadow duration-200 ${statusStyle.border}`}
+        className={`rounded-xl bg-zinc-950/80 backdrop-blur-sm p-5 shadow-sm border-l-4 hover:shadow-md transition-shadow duration-200 ${statusStyle.border}`}
       >
         <div className="flex justify-between items-start">
           <div className="flex-1">
@@ -141,12 +177,12 @@ export default function TodoItem(props: IProps) {
 
             <h3
               className={`font-semibold text-lg ${
-                status === "deleted" ? "line-through text-gray-400" : "text-orange-700"
+                status === "deleted" ? "line-through text-gray-400" : "text-orange-500"
               }`}
             >
               {title}
             </h3>
-            <p className="text-gray-600 mt-1">{description}</p>
+            <p className="text-gray-300 mt-1">{description}</p>
 
             <div className="flex items-center mt-3 gap-3 flex-wrap">
               <span
@@ -162,14 +198,14 @@ export default function TodoItem(props: IProps) {
 
           <div className="flex space-x-1 mt-1">
             <>
-              <button className="p-2 rounded-full hover:bg-orange-100 transition" onClick={handleEdit}>
-                <Edit className="h-5 w-5 text-orange-600" />
+              <button className="p-2 rounded-full hover:bg-orange-500/10 transition" onClick={handleEdit}>
+                <Edit className="h-5 w-5 text-orange-500" />
               </button>
-              <button className="p-2 rounded-full hover:bg-orange-100 transition" onClick={handleDelete}>
+              <button className="p-2 rounded-full hover:bg-orange-500/10 transition" onClick={handleDelete}>
                 <Trash2 className="h-5 w-5 text-orange-500" />
               </button>
               {status === "pending" && (
-                <button className="p-2 rounded-full hover:bg-green-100 transition" onClick={handleComplete}>
+                <button className="p-2 rounded-full hover:bg-green-500/10 transition" onClick={handleComplete}>
                   <CheckCircle className="h-5 w-5 text-green-500" />
                 </button>
               )}
@@ -179,9 +215,9 @@ export default function TodoItem(props: IProps) {
       </div>
 
       <Dialog open={isEditing} onOpenChange={setIsEditing}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="bg-zinc-900 border-orange-700 text-white">
           <DialogHeader>
-            <DialogTitle className="text-orange-700">Edit Todo</DialogTitle>
+            <DialogTitle className="text-orange-500">Edit Todo</DialogTitle>
           </DialogHeader>
           <EditForm setIsEditing={setIsEditing} {...props} hasExpiration={expiresAt !== undefined} />
         </DialogContent>

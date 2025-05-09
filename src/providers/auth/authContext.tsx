@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useLayoutEffect, useState } from "react";
 import { IAuthContext, IContextProps, IUser } from "../../@types";
 import { INITIAL_CONTEXT } from "./constants";
 import useLocalStorage from "../../hooks/useLocalStorage";
@@ -7,13 +7,11 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 const AuthContext = createContext<IAuthContext> (INITIAL_CONTEXT);
 
 const AuthProvider = (props: IContextProps) => {
-    const [user, setUser] = useState<IUser | null>(null);
-    const [isLoading, setIsLoading] = useState(true) 
+    const [user, setUser] = useState<IUser | null>(null); 
     const {storedData} =  useLocalStorage("authed-user", user);
-    useEffect(() => {
+    useLayoutEffect(() => {
         setUser(storedData);
-        setIsLoading(false);
-    }, [])
+    }, [storedData])
     const login = (data: IUser) => {
         setUser(data);
     }
@@ -22,7 +20,7 @@ const AuthProvider = (props: IContextProps) => {
         setUser(null);
     }
 
-    const value: IAuthContext = {user, login, logout, isLoading};
+    const value: IAuthContext = {user, login, logout};
 
     return <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>
 }

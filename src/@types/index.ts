@@ -59,7 +59,6 @@ export interface IAuthContext {
     login: (data: IUser) => void,
     logout: () => void,
     user: IUser | null,
-    isLoading: boolean
 }
 
 export interface IStateContext {

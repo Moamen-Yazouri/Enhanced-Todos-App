@@ -62,13 +62,13 @@ export default function Navbar() {
           {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="flex items-center gap-2 text-orange-400 hover:text-orange-300">
+                <Button variant="ghost" className="flex items-center gap-2 text-orange-400 hover:text-orange-300 cursor-pointer">
                   <User className="h-4 w-4" />
                   {user.email}
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="bg-zinc-900 border border-orange-700 text-white">
-                <DropdownMenuItem onClick={logout} className="text-orange-400 hover:bg-orange-500/10">
+                <DropdownMenuItem onClick={logout} className="text-orange-400 hover:bg-orange-500/10 cursor-pointer">
                   Logout
                 </DropdownMenuItem>
               </DropdownMenuContent>
