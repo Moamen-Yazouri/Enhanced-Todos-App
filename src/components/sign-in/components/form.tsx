@@ -24,10 +24,10 @@ return (
         isPassword={true}
         label="Password"
         placeholder="••••••••"
-                            style={{
-                                label: "text-sm font-medium flex items-center text-white",
-                                input: "focus-visible:ring-orange-500 focus-visible:border-orange-500 border border-white"
-                            }}
+        style={{
+            label: "text-sm font-medium flex items-center text-white",
+            input: "focus-visible:ring-orange-500 focus-visible:border-orange-500 border border-white"
+        }}
         />
 
         <div className="pt-2">

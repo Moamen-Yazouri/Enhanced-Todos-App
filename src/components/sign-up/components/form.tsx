@@ -9,17 +9,17 @@ const SignupForm = () => {
     const formik = useSignUp()
     return (
         <FormikProvider value={formik}>
-            <Form action="">
+            <Form action="" className='flex flex-col gap-2'>
                 <MotionField
                     name='name'
                     isPassword={false}
                     placeholder='John Doe'
                     label='Full name'
-                    style={{
-                        input: "bg-white/30 border-white/20 focus-visible:ring-orange-300 focus-visible:border-orange-300",
-                        label: "text-foreground"
-                    }}
                     required={true}
+                    style={{
+                        label: "text-sm font-medium flex items-center text-white",
+                        input: "focus-visible:ring-orange-500 focus-visible:border-orange-500 border border-white"
+                    }}
                 />
                 <MotionField
                     name='email'
@@ -27,26 +27,34 @@ const SignupForm = () => {
                     type='email'
                     placeholder='jhon@example.com'
                     label='Email'
-                    style={{
-                        input: "bg-white/30 border-white/20 focus-visible:ring-orange-300 focus-visible:border-orange-300",
-                        label: "text-foreground"
-                    }}
                     required={true}
+                    style={{
+                        label: "text-sm font-medium flex items-center text-white",
+                        input: "focus-visible:ring-orange-500 focus-visible:border-orange-500 border border-white"
+                    }}
                 />
                 <MotionField
                     name="password"
                     placeholder="••••••••"
                     label="Password"
                     isPassword= {true}
+                    style={{
+                        label: "text-sm font-medium flex items-center text-white",
+                        input: "focus-visible:ring-orange-500 focus-visible:border-orange-500 border border-white"
+                    }}
                 />
                 <MotionField
                     name="confirmPassword"
                     placeholder="••••••••"
                     label="Confirm Password"
                     isPassword= {true}
+                    style={{
+                        label: "text-sm font-medium flex items-center text-white",
+                        input: "focus-visible:ring-orange-500 focus-visible:border-orange-500 border border-white"
+                    }}
                 />
                 <Button
-                    className="w-full bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white border-none"
+                    className="w-full bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white border-none cursor-pointer"
                     type="submit" 
                 >
                     {formik.isSubmitting ? (
