@@ -15,8 +15,11 @@ import { categories, statuses } from "@/constants/constants"
 import Loader from "../ui/loader"
 import useFilter from "@/hooks/useFilter"
 import useFilterActions from "@/hooks/useFilterActions"
+import UnauthorizedPage from "../unAuthorized/unAuthorized"
+import { AuthContext } from "@/providers/auth/authContext"
 
 export default function AllTodos() {
+  const { user } = useContext(AuthContext);
   const { state, loadingData } = useContext(StateContext)
   const deletedTodos = state?.deletedTodos || [];
   const [showFilters, setShowFilters] = useState(false);
@@ -35,7 +38,7 @@ export default function AllTodos() {
   const activeFilterCount = useMemo(() => {
     return catsFilter.length + (params.get("query") ? 1 : 0);
   }, [filterTodos]);
-
+  if(!user) return <UnauthorizedPage/>
   return (
     <div className="max-w-3xl mx-auto p-6 rounded-2xl glass shadow-lg my-10">
       <div className="flex justify-between items-center mb-6">

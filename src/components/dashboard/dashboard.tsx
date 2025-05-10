@@ -17,24 +17,22 @@ import { ScrollableContainer } from "../scroll-container/scrollContainer"
 export default function TaskDashboard() {
   const [activeTab, setActiveTab] = useState("overview")
   const { state } = useContext(StateContext)
-  const todos = state.todos
-  const deletedTodos = state.deletedTodos
   const taskStatusData: IDashboardData[] = useMemo(() => {
-    return getStatusData([...todos, ...deletedTodos])
+    return getStatusData([...state.todos || [], ...state.deletedTodos || []])
   }, [state])
 
   const priorityDistributionData: IDashboardData[] = useMemo(() => {
-    return getPriorityData(todos)
+    return getPriorityData(state.todos || [])
   }, [state])
 
   const taskCategoryData: IDashboardData[] = useMemo(() => {
-    return getCategorydata([...todos, ...deletedTodos])
+    return getCategorydata([...state.todos || [], ...state.deletedTodos || []])
   }, [state])
 
   const totalTasks = taskStatusData.reduce((sum, item) => sum + item.value, 0)
 
   const { completedTasks, pendingTasks, deletedTasks, delayedTasks } = useMemo(() => {
-    return todosStatistics(state.todos)
+    return todosStatistics(state.todos || [])
   }, [state])
 
   // Calculate completion rate

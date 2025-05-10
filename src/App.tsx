@@ -8,6 +8,7 @@ import DeletedTodos from './components/deleted-tasks/deletedTasks'
 import SignupForm from './components/sign-up/signup-form'
 import TaskDashboard from './components/dashboard/dashboard'
 import LandingPage from './components/landing/landingPage'
+import UnauthorizedPage from './components/unAuthorized/unAuthorized'
 
 
 
@@ -21,6 +22,7 @@ function App() {
       <Route path='/add-todo' element= {<AddTodo />}/> 
       <Route path='/deleted' element={<DeletedTodos />} />
       <Route path='/dashboard' element={<TaskDashboard />} />
+      <Route path="/access-denied" element= {<UnauthorizedPage/>}/>
     </Routes>
   )
 }
