@@ -5,7 +5,7 @@ import { PlusCircle, Filter, Search, X } from "lucide-react"
 import { Link, useSearchParams } from "react-router-dom"
 import TodoItem from "../todoItem/todoItem"
 import { StateContext } from "@/providers/state/stateContext"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useMemo, useState } from "react"
 import { ScrollableContainer } from "../scroll-container/scrollContainer"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Badge } from "@/components/ui/badge"
@@ -16,63 +16,29 @@ import { ITodoItem, TodoCategory, TodoState } from "@/@types"
 import { categories, statuses } from "./constants"
 import Loader from "../ui/loader"
 import useFilter from "@/hooks/useFilter"
+import useFilterActions from "@/hooks/useFilterActions"
 
 export default function AllTodos() {
   const { state, loadingData } = useContext(StateContext)
   const todos = state?.todos || [];
   const [showFilters, setShowFilters] = useState(false)
-  const [catsFilter, setCatsFilters] = useState<TodoCategory[]>([]);
-  const [statesFilter, setStatesFilters] = useState<TodoState[]>([]);
-  const [params, setParams] = useSearchParams();
-  const handleClearFilters = () => {
-    setCatsFilters([]);
-    setStatesFilters([]);
-    params.delete("search");
-    setParams(params); 
-  }
-
-  const handleResetSearch = () => {
-    params.delete("search");
-    setParams(params);
-  }
-
-  const handleSearch = (query: React.ChangeEvent<HTMLInputElement>) => {
-      const search = query.target.value;
-      if(search.length > 0) {
-        params.set("search", query.target.value);
-        setParams(params);
-      }
-      else {
-        params.delete("search");
-        setParams(params);
-      }
-
-  };
-
-  const handleCategory = (checked: CheckedState, categoryId: TodoCategory) => {
-    if(checked) {
-      setCatsFilters(prev => [...prev, categoryId]);
-    }
-    else {
-      const cats = catsFilter.filter(c => c !== categoryId);
-      setCatsFilters(cats)
-    }
-  }
-
-  const handleStatus = (checked: CheckedState, status: TodoState) => {
-        if(checked) {
-      setStatesFilters(prev => [...prev, status]);
-    }
-    else {
-      const states = statesFilter.filter(s => s !== status);
-      setStatesFilters(states)
-    }
-  }
+  const {
+        catsFilter,
+        statesFilter,
+        params,
+        handleClearFilters,
+        handleSearch,
+        handleCategory,
+        handleStatus,
+        handleResetSearch
+    } = useFilterActions()
 
   const filterTodos = useFilter({todos, catsFilter, statesFilter, params});
   
-  // Count active filters for the badge
-  const activeFilterCount = catsFilter.length + statesFilter.length + (params.get("query") ? 1 : 0)
+  const activeFilterCount = useMemo(() => {
+    return catsFilter.length + statesFilter.length + (params.get("query") ? 1 : 0);
+  }, [filterTodos]);
+
   return (
     <div className="max-w-3xl mx-auto p-6 rounded-2xl glass shadow-lg my-10">
       <div className="flex justify-between items-center mb-6">
