@@ -149,7 +149,22 @@
   overflow-y: hidden;
   scroll-behavior: smooth;
   }
+  input, textarea {
+  caret-color: orange;
+  color: orange /* purple */
+}
+input::placeholder, textarea::placeholder {
+  transition: 0.3s; 
+  color: orange;
+}
 
+input:focus, textarea:focus {
+  outline: 0;
+  box-shadow: none;
+}
+input:focus::placeholder, textarea:focus::placeholder {
+  color: transparent;
+}
   /* Custom scrollbar styles */
   .custom-scrollbar {
     scrollbar-width: thin; /* Firefox */
