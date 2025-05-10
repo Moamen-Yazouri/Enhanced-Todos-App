@@ -18,9 +18,8 @@ const AddTodoForm = () => {
     const formik = useAddTodo();
     return (
         <FormikProvider value={formik}>
-            <Form>
-                <CardContent className="space-y-6">
-
+            <Form className='p-0 max-w-fit'>
+                <CardContent className="space-y-6 w-xl">
                         <MotionedField 
                             type='text'
                             label='Title'
@@ -28,23 +27,19 @@ const AddTodoForm = () => {
                             isPassword={false}
                             required={true}
                             placeholder='Enter task title..'
-                            style={
-                                {
-                                    label: "text-sm font-medium flex items-center",
-                                    input: "focus-visible:ring-orange-500"
-                                }
-                            }
+                            style={{
+                                label: "text-sm font-medium flex items-center text-white",
+                                input: "focus-visible:ring-orange-500 focus-visible:border-orange-500 border border-white"
+                            }}
                         />
                         <MotionedTextArea
                             label="Description"
                             name='description'
                             placeholder='Enter task description'
-                            style={
-                                {
-                                    label: "text-sm font-medium flex items-center", 
-                                    input: "focus-visible:ring-orange-500 min-h-[100px]"
-                                }
-                            }
+                            style={{
+                                label: "text-sm font-medium flex items-center text-white", 
+                                input: "focus-visible:ring-orange-500 focus-visible:border-orange-500 border border-white min-h-[100px]"
+                            }}
                         />
                     
 
@@ -74,9 +69,9 @@ const AddTodoForm = () => {
                             onCheckedChange={(checked) => {
                                 setHasExpiration(checked as boolean)
                             }}
-                            className="text-orange-500 focus:ring-orange-500"
+                            className="text-orange-500 focus:ring-orange-500 data-[state=checked]:bg-orange-500"
                             />
-                            <Label htmlFor="hasExpiration" className="text-sm font-medium cursor-pointer">
+                            <Label htmlFor="hasExpiration" className="text-sm font-medium cursor-pointer text-white">
                             Set expiration date
                             </Label>
                         </div>
@@ -91,13 +86,16 @@ const AddTodoForm = () => {
                                 name='expiresAt'
                                 min={new Date().toISOString().split("T")[0]}
                                 required={hasExpiration}
-
+                                style={{
+                                    label: "text-sm font-medium flex items-center text-white",
+                                    input: "focus-visible:ring-orange-500 focus-visible:border-orange-500 border border-white text-white"
+                                }}
                             />
                         )}
                 </CardContent>
 
 
-                <CardFooter className="flex justify-end space-x-4 pt-4 border-t">
+                <CardFooter className="flex justify-end space-x-4 pt-4 border-t mt-4">
                     <Link to="/">
                     <Button variant="outline" type="button">
                         Cancel

@@ -104,11 +104,11 @@ const EditForm = (props: IProps) => {
                 </CardContent>
 
 
-                <CardFooter className="flex justify-end space-x-4 pt-4 border-t">
+                <CardFooter className="flex justify-end space-x-4 pt-4 border-t text-black mt-5">
                     <Button variant="outline" type="button" onClick={() => props.setIsEditing(false)}>
                         Cancel
                     </Button>
-                    <Button type="submit" className="bg-orange-500 hover:bg-orange-600 text-white">
+                    <Button type="submit" className="bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white border-none shadow-md">
                     <Save className="h-4 w-4 mr-2" />
                         {props.status === "deleted" ?  "Recover task" : "Edit task"}
                     </Button>

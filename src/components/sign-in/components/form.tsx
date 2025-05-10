@@ -15,8 +15,8 @@ return (
         label="Email"
         placeholder="email@example.com"
         style={{
-            input: "bg-white/30 border-white/20 focus-visible:ring-orange-300 focus-visible:border-orange-300",
-            label: "text-foreground",
+            label: "text-sm font-medium flex items-center text-white",
+            input: "focus-visible:ring-orange-500 focus-visible:border-orange-500 border border-white"
         }}
         />
         <MotionField
@@ -24,10 +24,10 @@ return (
         isPassword={true}
         label="Password"
         placeholder="••••••••"
-        style={{
-            input: "bg-white/30 border-white/20 focus-visible:ring-orange-300 focus-visible:border-orange-300",
-            label: "text-foreground",
-        }}
+                            style={{
+                                label: "text-sm font-medium flex items-center text-white",
+                                input: "focus-visible:ring-orange-500 focus-visible:border-orange-500 border border-white"
+                            }}
         />
 
         <div className="pt-2">
