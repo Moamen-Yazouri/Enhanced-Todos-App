@@ -15,11 +15,11 @@ import { CheckedState } from "@radix-ui/react-checkbox"
 import { ITodoItem, TodoCategory, TodoState } from "@/@types"
 import { categories, statuses } from "./constants"
 import Loader from "../ui/loader"
+import useFilter from "@/hooks/useFilter"
 
 export default function AllTodos() {
   const { state, loadingData } = useContext(StateContext)
   const todos = state?.todos || [];
-  const [filtersdTodos, setFilterdTodos] = useState<ITodoItem[]>(todos);
   const [showFilters, setShowFilters] = useState(false)
   const [catsFilter, setCatsFilters] = useState<TodoCategory[]>([]);
   const [statesFilter, setStatesFilters] = useState<TodoState[]>([]);
@@ -48,6 +48,7 @@ export default function AllTodos() {
       }
 
   };
+
   const handleCategory = (checked: CheckedState, categoryId: TodoCategory) => {
     if(checked) {
       setCatsFilters(prev => [...prev, categoryId]);
@@ -68,27 +69,7 @@ export default function AllTodos() {
     }
   }
 
-
-  useEffect(() => {
-    setFilterdTodos(todos);
-    const searchparam = params.get("search");
-
-    if(searchparam && filtersdTodos.length > 0) {
-      const filtered = todos.filter(todo => todo.title.toLowerCase().includes(searchparam.toLowerCase()));
-      setFilterdTodos(filtered);
-    }
-
-    if(catsFilter.length > 0) {
-      const filtered = todos.filter(todo => catsFilter.includes(todo.category));
-      setFilterdTodos(filtered);
-    }
-
-    if(statesFilter.length > 0) {
-      const filtered = todos.filter(todo => statesFilter.includes(todo.status));
-      setFilterdTodos(filtered);
-    }
-
-  }, [params, todos])
+  const filterTodos = useFilter({todos, catsFilter, statesFilter, params});
   
   // Count active filters for the badge
   const activeFilterCount = catsFilter.length + statesFilter.length + (params.get("query") ? 1 : 0)
@@ -304,7 +285,7 @@ export default function AllTodos() {
         {
           todos.length > 0 && !loadingData &&(
             <div className="space-y-4">
-                {filtersdTodos.map((todo) => (
+                {filterTodos.map((todo) => (
                   <TodoItem
                     key={todo.id + todo.status}
                     id={todo.id}
