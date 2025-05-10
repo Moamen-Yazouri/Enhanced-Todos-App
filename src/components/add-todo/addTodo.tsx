@@ -10,7 +10,7 @@
     return (
         <div className="max-w-2xl mx-auto p-4 py-4 mt-2  h-xl rounded-xl bg-zinc-950/80 backdrop-blur-md shadow-sm border-2 border-orange-500">
         <div className="flex items-center mb-6">
-            <Link to="/" className="mr-4">
+            <Link to="/tasks" className="mr-4">
             <Button
                 variant="ghost"
                 size="icon"

@@ -18,7 +18,7 @@ import useFilterActions from "@/hooks/useFilterActions"
 import UnauthorizedPage from "../unAuthorized/unAuthorized"
 import { AuthContext } from "@/providers/auth/authContext"
 
-export default function AllTodos() {
+export default function DeletedTodos() {
   const { user } = useContext(AuthContext);
   const { state, loadingData } = useContext(StateContext)
   const deletedTodos = state?.deletedTodos || [];
@@ -133,7 +133,7 @@ export default function AllTodos() {
             </PopoverContent>
           </Popover>
 
-          <Link to="/add-todo">
+          <Link to="/add-task">
             <Button className="bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white border-none shadow-md">
               <PlusCircle className="h-4 w-4 mr-2" />
               Add Task

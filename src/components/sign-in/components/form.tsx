@@ -32,7 +32,8 @@ return (
 
         <div className="pt-2">
         <Button
-            className="w-full bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white border-none"
+            className=
+                "w-full bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white border-none cursor-pointer"
             type="submit"
         >
             {formik.isSubmitting ? (

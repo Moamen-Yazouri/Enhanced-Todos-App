@@ -11,33 +11,6 @@ import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
 
 export default function LoginForm() {
-const [email, setEmail] = useState("")
-const [password, setPassword] = useState("")
-const [isLoading, setIsLoading] = useState(false)
-const [error, setError] = useState("")
-const [success, setSuccess] = useState(false)
-
-const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError("")
-
-    // Simulate authentication
-    try {
-    // Replace with your actual authentication logic
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-
-    if (email === "user@example.com" && password === "password") {
-        setSuccess(true)
-    } else {
-        setError("Invalid email or password")
-    }
-    } catch (err) {
-    setError("An error occurred. Please try again.")
-    } finally {
-    setIsLoading(false)
-    }
-}
 
 return (
     <div className="flex min-h-screen items-center justify-start p-4 relative overflow-hidden flex-col">
