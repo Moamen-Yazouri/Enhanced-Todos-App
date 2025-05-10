@@ -89,7 +89,7 @@
 //     status: EStatus.COMPLETED,
 //   },
 // ];]
-import { EPriority } from "@/@types";
+import { EPriority, TodoCategory, TodoState } from "@/@types";
 import { IOptions } from "@/components/motionedSelect/types";
 
 
@@ -105,4 +105,16 @@ export const CATEGORIES: IOptions[] = [
     {value: "work", label: "Work"},
 ]
 
+export const categories: {id: TodoCategory, label: string}[] = [
+    { id: "work", label: "Work" },
+    { id: "personal", label: "Personal" },
+    { id: "study", label: "Study" },
+    { id: "health", label: "Health" },
+]
+
+export const statuses: {id: TodoState, label: string}[] = [
+    { id: "pending", label: "Pending" },
+    { id: "completed", label: "Completed" },
+    { id: "delayed", label: "Delayed" },
+  ]
 
