@@ -16,7 +16,6 @@ export default function Navbar() {
   const [animateLogo, setAnimateLogo] = useState(false)
   const pathname = useLocation().pathname
   const { user, logout } = useContext(AuthContext)
-
   // Trigger logo animation when component mounts
   useEffect(() => {
     setAnimateLogo(true)

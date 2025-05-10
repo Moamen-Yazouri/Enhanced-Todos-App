@@ -14,10 +14,11 @@ import { Label } from "@/components/ui/label"
 import { CheckedState } from "@radix-ui/react-checkbox"
 import { ITodoItem, TodoCategory, TodoState } from "@/@types"
 import { categories, statuses } from "./constants"
+import Loader from "../ui/loader"
 
 export default function AllTodos() {
-  const { state } = useContext(StateContext)
-  const todos = state.todos || [];
+  const { state, loadingData } = useContext(StateContext)
+  const todos = state?.todos || [];
   const [filtersdTodos, setFilterdTodos] = useState<ITodoItem[]>(todos);
   const [showFilters, setShowFilters] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
@@ -46,7 +47,6 @@ export default function AllTodos() {
   }
   // Count active filters for the badge
   const activeFilterCount = catsFilter.length + statesFilter.length + (searchQuery ? 1 : 0)
-
   return (
     <div className="max-w-3xl mx-auto p-6 rounded-2xl glass shadow-lg my-10">
       <div className="flex justify-between items-center mb-6">
@@ -249,27 +249,39 @@ export default function AllTodos() {
       )}
 
       <ScrollableContainer maxHeight="70vh">
-        {todos.length === 0 ? (
-          <div className="text-center py-10 bg-white/70 backdrop-blur-sm rounded-xl border border-orange-200/50 shadow-sm">
-            <p className="text-gray-500">No tasks yet. Add your first task!</p>
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {todos.map((todo) => (
-              <TodoItem
-                key={todo.id + todo.status}
-                id={todo.id}
-                category={todo.category}
-                title={todo.title}
-                description={todo.description}
-                status={todo.status}
-                createdAt={todo.createdAt}
-                expiresAt={todo.expiresAt}
-                priority={todo.priority}
-              />
-            ))}
-          </div>
-        )}
+        {
+          loadingData && (
+              <div className="flex items-center justify-center">
+                <Loader/>
+              </div> 
+          )
+        }
+        {todos.length === 0  && !loadingData && (
+            <div className="text-center py-10 bg-white/70 backdrop-blur-sm rounded-xl border border-orange-200/50 shadow-sm">
+              <p className="text-gray-500">No tasks yet. Add your first task!</p>
+            </div>
+          ) 
+        }
+
+        {
+          todos.length > 0 && !loadingData &&(
+            <div className="space-y-4">
+                {todos.map((todo) => (
+                  <TodoItem
+                    key={todo.id + todo.status}
+                    id={todo.id}
+                    category={todo.category}
+                    title={todo.title}
+                    description={todo.description}
+                    status={todo.status}
+                    createdAt={todo.createdAt}
+                    expiresAt={todo.expiresAt}
+                    priority={todo.priority}
+                  />
+                ))}
+              </div>
+          )
+        }
       </ScrollableContainer>
     </div>
   )

@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useLayoutEffect, useReducer, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useReducer, useRef, useState } from "react";
 import {IContextProps, IStateContext } from "../../@types";
 import { INITIAL_CONTEXT } from "./constants";
 import reducer from "../../reducer/reducer";
@@ -9,22 +9,34 @@ const StateContext = createContext<IStateContext>(INITIAL_CONTEXT);
 
 const StateProvider = (props: IContextProps) => {
     const {user} = useContext(AuthContext); 
+    const mount = useRef(true)
     const [state, dispatch] = useReducer(reducer, INITIAL_CONTEXT.state);
     const [loadingData, setLoadingOff] = useState<boolean>(true);
-    if(user) {
-        useLocalStorage(`${user.name}-todos`,state.todos);
-        useLocalStorage(`${user.name}-deleted-todos`,state.deletedTodos);
-    }
-
+    const [storageKey, setStorageKey] = useState<string | null>(null);
+    const [deletedKey, setDeletedKey] = useState<string | null>(null);
     useEffect(() => {
         if(user) {
-            const todos = JSON.parse(localStorage.getItem(`${user.name}-todos`) || "[]");
-            const deletedTodos = JSON.parse(localStorage.getItem(`${user.name}-deleted-todos`) || "[]");
-            dispatch({type: "INIT_DATA", payload: {todos, deletedTodos}});
-        }
-        setLoadingOff(false);
+            setStorageKey(`${user.name}-todos`);
+            setDeletedKey(`${user.name}-deleted-todos`);
+        }        
         
-    }, [])
+    }, [user]);
+
+    const todos =  useLocalStorage(storageKey,state.todos);
+    const deletedTodos = useLocalStorage(deletedKey,state.deletedTodos);
+    
+    useEffect(() => {
+        if(user) {
+            dispatch({type: "INIT_DATA", payload: {todos: todos.storedData, deletedTodos: deletedTodos.storedData}});
+        }
+        if(mount.current) {
+            mount.current = false;
+            return;
+        }
+        setTimeout(() => {
+            setLoadingOff(false);
+        }, 1000);
+    }, [todos.storedData, deletedTodos.storedData])
     const value: IStateContext = {state, dispatch, loadingData};
 
     return <StateContext.Provider value={value}>{props.children}</StateContext.Provider>

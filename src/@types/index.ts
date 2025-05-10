@@ -41,8 +41,8 @@ export interface IUser {
 }
 
 export interface IState {
-    todos: ITodoItem[],
-    deletedTodos: ITodoItem[] 
+    todos: ITodoItem[] | null,
+    deletedTodos: ITodoItem[] | null 
 }
 
 export type Action = 
