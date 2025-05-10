@@ -41,8 +41,8 @@ export interface IUser {
 }
 
 export interface IState {
-    todos: ITodoItem[],
-    deletedTodos: ITodoItem[] 
+    todos: ITodoItem[] | null,
+    deletedTodos: ITodoItem[] | null 
 }
 
 export type Action = 
@@ -59,7 +59,6 @@ export interface IAuthContext {
     login: (data: IUser) => void,
     logout: () => void,
     user: IUser | null,
-    isLoading: boolean
 }
 
 export interface IStateContext {

@@ -8,14 +8,13 @@ import Header from './components/header/Header.tsx';
 import { AuthProvider } from './providers/auth/authContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
-        <BrowserRouter>
-                <StateProvider>
-                <AuthProvider>
-                        
+        <AuthProvider>
+                <BrowserRouter>
+                        <StateProvider>
                                 <Header/>
-                                <App />
+                                        <App />
                                 <Toaster richColors/>
-                </AuthProvider>
-                </StateProvider>
-        </BrowserRouter>
+                        </StateProvider>
+                </BrowserRouter>
+        </AuthProvider>
 )
