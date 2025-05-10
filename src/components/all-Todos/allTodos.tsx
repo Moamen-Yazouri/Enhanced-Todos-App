@@ -2,10 +2,10 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { PlusCircle, Filter, Search, X } from "lucide-react"
-import { Link } from "react-router-dom"
+import { Link, useSearchParams } from "react-router-dom"
 import TodoItem from "../todoItem/todoItem"
 import { StateContext } from "@/providers/state/stateContext"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { ScrollableContainer } from "../scroll-container/scrollContainer"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Badge } from "@/components/ui/badge"
@@ -21,11 +21,33 @@ export default function AllTodos() {
   const todos = state?.todos || [];
   const [filtersdTodos, setFilterdTodos] = useState<ITodoItem[]>(todos);
   const [showFilters, setShowFilters] = useState(false)
-  const [searchQuery, setSearchQuery] = useState("")
-  
   const [catsFilter, setCatsFilters] = useState<TodoCategory[]>([]);
   const [statesFilter, setStatesFilters] = useState<TodoState[]>([]);
+  const [params, setParams] = useSearchParams();
+  const handleClearFilters = () => {
+    setCatsFilters([]);
+    setStatesFilters([]);
+    params.delete("search");
+    setParams(params); 
+  }
 
+  const handleResetSearch = () => {
+    params.delete("search");
+    setParams(params);
+  }
+
+  const handleSearch = (query: React.ChangeEvent<HTMLInputElement>) => {
+      const search = query.target.value;
+      if(search.length > 0) {
+        params.set("search", query.target.value);
+        setParams(params);
+      }
+      else {
+        params.delete("search");
+        setParams(params);
+      }
+
+  };
   const handleCategory = (checked: CheckedState, categoryId: TodoCategory) => {
     if(checked) {
       setCatsFilters(prev => [...prev, categoryId]);
@@ -45,8 +67,31 @@ export default function AllTodos() {
       setStatesFilters(states)
     }
   }
+
+
+  useEffect(() => {
+    setFilterdTodos(todos);
+    const searchparam = params.get("search");
+
+    if(searchparam && filtersdTodos.length > 0) {
+      const filtered = todos.filter(todo => todo.title.toLowerCase().includes(searchparam.toLowerCase()));
+      setFilterdTodos(filtered);
+    }
+
+    if(catsFilter.length > 0) {
+      const filtered = todos.filter(todo => catsFilter.includes(todo.category));
+      setFilterdTodos(filtered);
+    }
+
+    if(statesFilter.length > 0) {
+      const filtered = todos.filter(todo => statesFilter.includes(todo.status));
+      setFilterdTodos(filtered);
+    }
+
+  }, [params, todos])
+  
   // Count active filters for the badge
-  const activeFilterCount = catsFilter.length + statesFilter.length + (searchQuery ? 1 : 0)
+  const activeFilterCount = catsFilter.length + statesFilter.length + (params.get("query") ? 1 : 0)
   return (
     <div className="max-w-3xl mx-auto p-6 rounded-2xl glass shadow-lg my-10">
       <div className="flex justify-between items-center mb-6">
@@ -62,9 +107,9 @@ export default function AllTodos() {
               >
                 <Filter className="h-4 w-4" />
                 Filter
-                {false && (
+                {activeFilterCount > 0 && (
                   <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center bg-gradient-to-r from-orange-500 to-rose-500 text-white">
-            
+                      {activeFilterCount}
                   </Badge>
                 )}
               </Button>
@@ -73,15 +118,12 @@ export default function AllTodos() {
               <div className="p-4 border-b border-white/10">
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="font-medium">Filter Tasks</h3>
-                  {false && (
+                  {activeFilterCount > 0 && (
                     <Button
                       variant="ghost"
                       size="sm"
                       className="h-8 px-2 text-xs text-rose-500 hover:text-rose-600 hover:bg-rose-500/10"
-                      onClick={() => {
-                        // Clear filters logic would go here
-                        setSearchQuery("")
-                      }}
+                      onClick={handleClearFilters}
                     >
                       Clear All
                     </Button>
@@ -92,15 +134,15 @@ export default function AllTodos() {
                   <Input
                     placeholder="Search by task name..."
                     className="pl-8 bg-white/30 border-white/20 focus-visible:ring-orange-300"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
+                    value={params.get("search") || ""}
+                    onChange={ handleSearch}
                   />
-                  {searchQuery && (
+                  {params.get("search") && (
                     <Button
                       variant="ghost"
                       size="sm"
                       className="absolute right-1 top-1 h-7 w-7 p-0 text-muted-foreground"
-                      onClick={() => setSearchQuery("")}
+                      onClick={handleResetSearch}
                     >
                       <X className="h-4 w-4" />
                     </Button>
@@ -174,17 +216,17 @@ export default function AllTodos() {
 
       {activeFilterCount > 0 && (
         <div className="flex flex-wrap gap-2 mb-4">
-          {searchQuery && (
+          {params.get("search") && (
             <Badge
               variant="outline"
               className="bg-white/20 border-white/20 text-foreground flex items-center gap-1 pl-2 pr-1 py-1"
             >
-              <span className="text-xs">Search: {searchQuery}</span>
+              <span className="text-xs">Search: {params.get("search")}</span>
               <Button
                 variant="ghost"
                 size="sm"
                 className="h-4 w-4 p-0 ml-1 text-foreground hover:bg-white/20 rounded-full"
-                onClick={() => setSearchQuery("")}
+                onClick={handleResetSearch}
               >
                 <X className="h-3 w-3" />
               </Button>
@@ -237,11 +279,7 @@ export default function AllTodos() {
             variant="ghost"
             size="sm"
             className="h-6 px-2 text-xs text-rose-500 hover:text-rose-600 hover:bg-rose-500/10"
-            onClick={() => {
-              setStatesFilters([])
-              setCatsFilters([]);
-              setSearchQuery("")
-            }}
+            onClick={handleClearFilters}
           >
             Clear All
           </Button>
@@ -266,7 +304,7 @@ export default function AllTodos() {
         {
           todos.length > 0 && !loadingData &&(
             <div className="space-y-4">
-                {todos.map((todo) => (
+                {filtersdTodos.map((todo) => (
                   <TodoItem
                     key={todo.id + todo.status}
                     id={todo.id}
