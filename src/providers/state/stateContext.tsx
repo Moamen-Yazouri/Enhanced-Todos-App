@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect,  useReducer,  useState } from "react";
+import { createContext, useContext, useEffect,  useReducer,  useState } from "react";
 import {IContextProps, IStateContext } from "../../@types";
 import { INITIAL_CONTEXT } from "./constants";
 import reducer from "../../reducer/reducer";

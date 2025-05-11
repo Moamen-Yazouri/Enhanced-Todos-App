@@ -1,6 +1,3 @@
-"use client"
-
-
 import { useLocation } from "react-router-dom"
 import Navbar from "./navbar"
 

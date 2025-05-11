@@ -1,4 +1,3 @@
-"use client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { PlusCircle, Filter, Search, X } from "lucide-react"
@@ -11,7 +10,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
-import { categories, statuses } from "@/constants/constants"
+import { categories} from "@/constants/constants"
 import Loader from "../ui/loader"
 import useFilter from "@/hooks/useFilter"
 import useFilterActions from "@/hooks/useFilterActions"

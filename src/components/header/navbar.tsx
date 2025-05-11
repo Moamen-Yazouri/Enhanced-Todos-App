@@ -1,7 +1,5 @@
-"use client"
-
-import { useContext, useState, useEffect } from "react"
-import { Menu, CheckSquare, Trash2, LayoutDashboard, LogIn, User, Contact } from "lucide-react"
+import { useContext, useState } from "react"
+import { Menu, LogIn, User, Contact } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet"
 import { cn } from "@/lib/utils"
@@ -9,7 +7,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { AuthContext } from "@/providers/auth/authContext"
 import AnimatedLogo from "../animated-logo/animatedLogo"
-
+import { navigation } from "./constants"
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -22,12 +20,7 @@ export default function Navbar() {
     navigate("/sign-in")
   }
 
-  const navigation = [
-    { name: "My Tasks", href: "/tasks", icon: CheckSquare },
-    { name: "Deleted Tasks", href: "/deleted-tasks", icon: Trash2 },
-    { name: "Dashboard", href: "/tasks-dashboard", icon: LayoutDashboard },
-    { name: "Contact Us", href: "/contact-us", icon: Contact },
-  ]
+
 
   const isActive = (path: string) => pathname === path
 
@@ -111,7 +104,6 @@ export default function Navbar() {
             </div>
           )}
 
-          {/* Mobile menu button */}
           <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
             <SheetTrigger asChild>
               <Button

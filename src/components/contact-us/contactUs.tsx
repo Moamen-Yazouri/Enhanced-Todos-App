@@ -1,5 +1,3 @@
-    "use client"
-
     import { Button } from "@/components/ui/button"
     import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
     import { Linkedin, Github, Mail, ExternalLink } from "lucide-react"
@@ -12,7 +10,6 @@
     const linkedInUrl = "https://www.linkedin.com/in/moamen-al-yazouri-80742433a/"
     const githubUrl = "https://github.com/Moamen-Yazouri"
     const email = "moaamenalyazouri@gmail.com"
-    const name = "Moamen Yazouri"
     return (
         <div className="flex flex-col min-h-screen items-center justify-center p-4 relative overflow-hidden">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -38,7 +35,6 @@
             </CardHeader>
 
             <CardContent className="space-y-4 pt-2">
-                {/* LinkedIn */}
                 <a href={linkedInUrl} target="_blank" rel="noopener noreferrer" className="group relative block">
                     <div className="absolute -inset-0.5 bg-gradient-to-r from-orange-500 to-rose-500 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
                     <div className="relative flex items-center p-4 bg-zinc-900 rounded-lg transition-colors group-hover:bg-zinc-800">
@@ -53,7 +49,6 @@
                     </div>
                 </a>
 
-                {/* GitHub */}
                 <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="group relative block">
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-orange-500 to-rose-500 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
                 <div className="relative flex items-center p-4 bg-zinc-900 rounded-lg transition-colors group-hover:bg-zinc-800">
@@ -68,7 +63,6 @@
                 </div>
                 </a>
 
-                {/* Email */}
                 <a href={`mailto:${email}`} className="group relative block">
                     <div className="absolute -inset-0.5 bg-gradient-to-r from-orange-500 to-rose-500 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
                     <div className="relative flex items-center p-4 bg-zinc-900 rounded-lg transition-colors group-hover:bg-zinc-800">

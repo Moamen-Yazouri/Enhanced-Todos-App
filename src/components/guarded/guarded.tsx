@@ -1,5 +1,5 @@
 import { AuthContext } from "@/providers/auth/authContext"
-import { useContext, useEffect, useRef, useState } from "react"
+import { useContext, useEffect} from "react"
 import { useNavigate } from "react-router-dom";
 import Unauthorized from "../unAuthorized/unAuthorized";
 

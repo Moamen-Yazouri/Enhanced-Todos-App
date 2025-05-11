@@ -130,9 +130,7 @@
 }
 
 @layer base {
-  .reset-all {
-    all: unset;
-  }
+
   * {
     @apply border-border outline-ring/50;
   }

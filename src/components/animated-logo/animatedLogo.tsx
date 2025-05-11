@@ -1,4 +1,3 @@
-"use client"
 
 import type React from "react"
 import { useEffect, useState } from "react"
@@ -13,10 +12,8 @@ interface AnimatedLogoProps {
 }
 
 export const AnimatedLogo: React.FC<AnimatedLogoProps> = ({
-    size = 40,
-    className = "",
-    textClassName = "",
-    darkMode = false,
+        size = 40,
+        className = "",
     }) => {
     const [isVisible, setIsVisible] = useState(false)
 

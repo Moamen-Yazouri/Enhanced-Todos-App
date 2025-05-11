@@ -1,6 +1,5 @@
 import { AuthContext } from "@/providers/auth/authContext"
-import { useContext, useEffect, useRef } from "react"
-import {  useNavigate } from "react-router-dom";
+import { useContext } from "react"
 import AlreadyLoggedIn from "../alredy-logged/alreadyLogged";
 interface IProps {
     children: React.ReactNode

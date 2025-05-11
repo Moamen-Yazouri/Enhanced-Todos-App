@@ -44,7 +44,6 @@ export default function AlreadyLoggedIn() {
             <div className="flex items-center justify-center">
                 <div className="bg-gradient-to-r from-orange-500 to-rose-500 p-0.5 rounded-full">
                 <Avatar className="h-24 w-24 border-4 border-zinc-950">
-                    {/* <AvatarImage src={userImage || "/placeholder.svg"} alt={userName} /> */}
                     <AvatarFallback className="bg-zinc-800 text-xl font-bold text-orange-500">{initials}</AvatarFallback>
                 </Avatar>
                 </div>

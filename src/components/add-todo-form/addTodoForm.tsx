@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from '../ui/button'
 import { Form, FormikProvider } from 'formik'
@@ -60,7 +60,7 @@ const   AddTodoForm = () => {
                             options = {PRIORITES}
                             required={true}
                         />
-                        {/* Expiration Date Field */}
+    
                     <div className="space-y-4 mb-4">
                         <div className="flex items-center space-x-2">
                             <Checkbox

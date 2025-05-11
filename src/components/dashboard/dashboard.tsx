@@ -1,13 +1,9 @@
-"use client"
-
 import { useContext, useMemo, useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Bar, BarChart, CartesianGrid, Cell, PieChart, Pie, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { CheckCircle2, Clock, ClipboardList, ListTodo, User, AlertTriangle } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { CheckCircle2, Clock, ClipboardList, AlertTriangle } from "lucide-react"
 import { getCategorydata, getPriorityData, getStatusData, todosStatistics } from "@/utils/dashboard"
 import { StateContext } from "@/providers/state/stateContext"
 import type { IDashboardData } from "./types"
@@ -36,14 +32,13 @@ export default function TaskDashboard() {
     return todosStatistics(state.todos || [])
   }, [state])
 
-  // Calculate completion rate
+  
   const completionRate = Math.round((completedTasks / totalTasks) * 100)
 
   return (
     <div className="flex min-h-screen flex-col">
 
 
-      {/* Main content */}
       <ScrollableContainer className="flex-1 p-4 sm:p-6" maxHeight="calc(100vh - 4rem)">
         <div className="mx-auto max-w-6xl space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
@@ -72,7 +67,6 @@ export default function TaskDashboard() {
                 </TabsList>
 
                 <TabsContent value="overview" className="space-y-6">
-                  {/* Stats cards */}
                   <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                     <Card className="glass border-white/20">
                       <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -126,7 +120,6 @@ export default function TaskDashboard() {
                     </Card>
                   </div>
 
-                  {/* Charts */}
                   <div className="grid gap-4 md:grid-cols-2">
                     <Card className="glass border-white/20">
                       <CardHeader>

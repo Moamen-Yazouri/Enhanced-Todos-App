@@ -1,30 +1,24 @@
-"use client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { PlusCircle, Filter, Search, X } from "lucide-react"
-import { Link, useSearchParams } from "react-router-dom"
+import { Link } from "react-router-dom"
 import TodoItem from "../todoItem/todoItem"
 import { StateContext } from "@/providers/state/stateContext"
-import { useContext, useEffect, useMemo, useState } from "react"
+import { useContext, useMemo, useState } from "react"
 import { ScrollableContainer } from "../scroll-container/scrollContainer"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
-import { CheckedState } from "@radix-ui/react-checkbox"
-import { ITodoItem, TodoCategory, TodoState } from "@/@types"
 import { categories, statuses } from "@/constants/constants"
 import Loader from "../ui/loader"
 import useFilter from "@/hooks/useFilter"
 import useFilterActions from "@/hooks/useFilterActions"
-import { AuthContext } from "@/providers/auth/authContext"
-import UnauthorizedPage from "../unAuthorized/unAuthorized"
+
 
 export default function AllTodos() {
-  const { user } = useContext(AuthContext);
   const { state, loadingData } = useContext(StateContext)
   const todos = state?.todos || [];
-  console.log(loadingData)
   const [showFilters, setShowFilters] = useState(false)
   const {
         catsFilter,
