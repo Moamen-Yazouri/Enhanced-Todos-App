@@ -2,7 +2,6 @@ import MotionField from '@/components/motionedField/motionedField'
 import { Button } from '@/components/ui/button'
 import { FormikProvider, Form } from 'formik'
 import { Loader } from 'lucide-react'
-import React from 'react'
 import { useSignUp } from '../hooks/useSignup'
 
 const SignupForm = () => {
