@@ -10,5 +10,5 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  base: process.env.VITE_BASE_PATH || "/Enhanced-Todos-App"
+  base: process.env.VITE_BASE_PATH || "/"
 })
