@@ -7,6 +7,7 @@ import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
 
 
+
 export default function Unauthorized() {
   return (
     <div className="flex flex-col min-h-screen items-center justify-center p-4 relative overflow-hidden">
@@ -46,7 +47,7 @@ export default function Unauthorized() {
 
             <div className="grid gap-4 pt-4">
               <Link to="/sign-in" className="w-full">
-                <Button className="w-full bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white">
+                <Button className="w-full bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white cursor-pointer">
                   Sign In
                 </Button>
               </Link>
@@ -63,7 +64,7 @@ export default function Unauthorized() {
               <Link to="/sign-up" className="w-full">
                 <Button
                   variant="outline"
-                  className="w-full border-orange-500/50 text-orange-500 hover:bg-orange-500/10 hover:text-rose-500"
+                  className="w-full border-orange-500/50 text-orange-500 hover:bg-orange-500/10 hover:text-rose-500 cursor-pointer"
                 >
                   Create Account
                 </Button>

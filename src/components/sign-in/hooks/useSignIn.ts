@@ -35,10 +35,10 @@ const useSignin = () => {
         }
         setSubmitting(false);
         resetForm();
-        console.log(user)
+        localStorage.setItem("just-logged", "true");
         login(user);
         toast.success("Logged successfully!");
-        navigate("/todos")
+        navigate("/tasks")
     };
 
     const formik = useFormik<IFormValues>({

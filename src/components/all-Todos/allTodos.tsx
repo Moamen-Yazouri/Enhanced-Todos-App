@@ -1,27 +1,22 @@
-"use client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { PlusCircle, Filter, Search, X } from "lucide-react"
-import { Link, useSearchParams } from "react-router-dom"
+import { Link } from "react-router-dom"
 import TodoItem from "../todoItem/todoItem"
 import { StateContext } from "@/providers/state/stateContext"
-import { useContext, useEffect, useMemo, useState } from "react"
+import { useContext, useMemo, useState } from "react"
 import { ScrollableContainer } from "../scroll-container/scrollContainer"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
-import { CheckedState } from "@radix-ui/react-checkbox"
-import { ITodoItem, TodoCategory, TodoState } from "@/@types"
 import { categories, statuses } from "@/constants/constants"
 import Loader from "../ui/loader"
 import useFilter from "@/hooks/useFilter"
 import useFilterActions from "@/hooks/useFilterActions"
-import { AuthContext } from "@/providers/auth/authContext"
-import UnauthorizedPage from "../unAuthorized/unAuthorized"
+
 
 export default function AllTodos() {
-  const { user } = useContext(AuthContext);
   const { state, loadingData } = useContext(StateContext)
   const todos = state?.todos || [];
   const [showFilters, setShowFilters] = useState(false)
@@ -41,7 +36,7 @@ export default function AllTodos() {
   const activeFilterCount = useMemo(() => {
     return catsFilter.length + statesFilter.length + (params.get("query") ? 1 : 0);
   }, [filterTodos]);
-  if(!user) return <UnauthorizedPage/>
+  
   return (
     <div className="max-w-3xl mx-auto p-6 rounded-2xl glass shadow-lg my-10">
       <div className="flex justify-between items-center mb-6">
@@ -155,7 +150,7 @@ export default function AllTodos() {
             </PopoverContent>
           </Popover>
 
-          <Link to="/add-todo">
+          <Link to="/add-task">
             <Button className="bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white border-none shadow-md">
               <PlusCircle className="h-4 w-4 mr-2" />
               Add Task
@@ -196,7 +191,6 @@ export default function AllTodos() {
                   variant="ghost"
                   size="sm"
                   className="h-4 w-4 p-0 ml-1 text-foreground hover:bg-white/20 rounded-full"
-                  // In a real implementation, you'd remove this category from filters
                 >
                   <X className="h-3 w-3" />
                 </Button>

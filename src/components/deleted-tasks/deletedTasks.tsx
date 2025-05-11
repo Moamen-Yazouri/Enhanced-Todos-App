@@ -1,4 +1,3 @@
-"use client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { PlusCircle, Filter, Search, X } from "lucide-react"
@@ -11,14 +10,14 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
-import { categories, statuses } from "@/constants/constants"
+import { categories} from "@/constants/constants"
 import Loader from "../ui/loader"
 import useFilter from "@/hooks/useFilter"
 import useFilterActions from "@/hooks/useFilterActions"
 import UnauthorizedPage from "../unAuthorized/unAuthorized"
 import { AuthContext } from "@/providers/auth/authContext"
 
-export default function AllTodos() {
+export default function DeletedTodos() {
   const { user } = useContext(AuthContext);
   const { state, loadingData } = useContext(StateContext)
   const deletedTodos = state?.deletedTodos || [];
@@ -133,7 +132,7 @@ export default function AllTodos() {
             </PopoverContent>
           </Popover>
 
-          <Link to="/add-todo">
+          <Link to="/add-task">
             <Button className="bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white border-none shadow-md">
               <PlusCircle className="h-4 w-4 mr-2" />
               Add Task
