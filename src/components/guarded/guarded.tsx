@@ -1,21 +1,31 @@
 import { AuthContext } from "@/providers/auth/authContext"
-import { useContext } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom";
+import Unauthorized from "../unAuthorized/unAuthorized";
 
 interface IProps {
     children: React.ReactNode
 }
 const Guarded = (props: IProps) => {
-    const {user} = useContext(AuthContext);
+    const {user, loadingUser} = useContext(AuthContext);
     const navigate = useNavigate();
-    if(!user) {
-        navigate("/access-denied");
-        return;
-    }
+    useEffect(() => {
+        const loggedOut = localStorage.getItem("logged-out");
 
-    return (
-        props.children
-    )
+        if (loggedOut) {
+            localStorage.removeItem("logged-out");
+            navigate("/sign-in");
+            return;
+        }
+    }, [user, navigate]);
+
+    if(loadingUser) return null;
+
+    else if(!loadingUser && user) return (props.children);
+
+    else return (
+        <Unauthorized />
+    );
 }
 
 export default Guarded

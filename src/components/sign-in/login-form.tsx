@@ -1,17 +1,12 @@
 "use client"
-
-import type React from "react"
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { ClipboardList } from "lucide-react"
 import SignInForm from "./components/form"
 import AnimatedLogo from "../animated-logo/animatedLogo"
 import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
 
 export default function LoginForm() {
-
+    console.log("rendering")
 return (
     <div className="flex min-h-screen items-center justify-start p-4 relative overflow-hidden flex-col">
     {/* Animated background elements */}

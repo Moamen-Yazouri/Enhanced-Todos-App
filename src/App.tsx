@@ -59,14 +59,16 @@ function App() {
         }
       />
 
-      <Route path="/access-denied" element= {
+      {/* <Route path="/access-denied" element= {
           <UnauthorizedPage/>
         }
       />
 
       <Route path='/already-logged' element= {
-        <AlreadyLoggedScreen />
-      } />
+        <Guarded>
+          <AlreadyLoggedScreen />
+        </Guarded>
+      } /> */}
 
       <Route path='/contact-us' element= {
         <ContactScreen />

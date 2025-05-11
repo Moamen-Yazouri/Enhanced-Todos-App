@@ -7,6 +7,7 @@ import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
 
 
+
 export default function Unauthorized() {
   return (
     <div className="flex flex-col min-h-screen items-center justify-center p-4 relative overflow-hidden">

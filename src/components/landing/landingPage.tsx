@@ -62,21 +62,13 @@ export default function LandingPage() {
             <Link to="/sign-in">
               <Button
                 size="lg"
-                className="bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white text-base sm:text-lg px-6 sm:px-8 py-4 h-auto"
+                className="bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white text-base sm:text-lg px-6 sm:px-8 py-4 h-auto cursor-pointer"
               >
                 Get Started
                 <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 transition-transform group-hover:translate-x-1" />
               </Button>
             </Link>
-            <Link to="/about">
-              <Button
-                variant="outline"
-                size="lg"
-                className="border-orange-500/50 text-orange-500 hover:bg-orange-500/10 hover:text-rose-500 text-base sm:text-lg px-6 sm:px-8 py-4 h-auto"
-              >
-                Learn More
-              </Button>
-            </Link>
+
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 justify-center text-sm sm:text-base">

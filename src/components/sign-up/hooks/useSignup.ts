@@ -19,7 +19,8 @@ export const useSignUp = () => {
             email: values.email,
             password: values.password
         }
-        localStorage.setItem("users", JSON.stringify([...users, newUser]))
+        localStorage.setItem("users", JSON.stringify([...users, newUser]));
+        localStorage.setItem("just-logged", "true");
         setTimeout(() => {
             resetForm();
             setSubmitting(false);

@@ -5,7 +5,7 @@ import { Menu, CheckSquare, Trash2, LayoutDashboard, LogIn, User, Contact } from
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet"
 import { cn } from "@/lib/utils"
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { AuthContext } from "@/providers/auth/authContext"
 import AnimatedLogo from "../animated-logo/animatedLogo"
@@ -13,13 +13,14 @@ import AnimatedLogo from "../animated-logo/animatedLogo"
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [animateLogo, setAnimateLogo] = useState(false)
   const pathname = useLocation().pathname
   const { user, logout } = useContext(AuthContext)
-  // Trigger logo animation when component mounts
-  useEffect(() => {
-    setAnimateLogo(true)
-  }, [])
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.setItem("logged-out", "true");
+    logout();
+    navigate("/sign-in")
+  }
 
   const navigation = [
     { name: "My Tasks", href: "/tasks", icon: CheckSquare },
@@ -33,12 +34,11 @@ export default function Navbar() {
   return (
     <div className="border-b border-orange-700 bg-zinc-950/50 backdrop-blur-md shadow-sm ">
       <div className="container flex h-16 items-center justify-between px-4 md:px-6">
-        {/* Logo */}
         <Link to="/" className="flex items-center hover:opacity-90 transition-opacity">
           <AnimatedLogo size={80} darkMode={true} />
         </Link>
         {
-          user && (
+          user ? (
             <nav className="hidden md:flex items-center gap-6">
               {navigation.map((item) => (
                 <Link
@@ -57,6 +57,25 @@ export default function Navbar() {
               ))}
             </nav>
           )
+          : (
+            <nav className="hidden md:flex items-center gap-6">
+              {[{ name: "Contact Us", href: "/contact-us", icon: Contact }].map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className={cn(
+                    "flex items-center gap-2 text-sm font-medium transition-colors",
+                    isActive(item.href)
+                      ? "text-orange-500 border-b-2 border-orange-500 pb-1"
+                      : "text-gray-300 hover:text-orange-400",
+                  )}
+                >
+                  <item.icon className="h-4 w-4" />
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
+            )
         }
 
         <div className="flex items-center gap-3">
@@ -69,7 +88,7 @@ export default function Navbar() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="bg-zinc-900 border border-orange-700 text-white">
-                <DropdownMenuItem onClick={logout} className="text-orange-400 hover:bg-orange-500/10 cursor-pointer">
+                <DropdownMenuItem onClick={handleLogout} className="text-orange-400 hover:bg-orange-500/10 cursor-pointer">
                   Logout
                 </DropdownMenuItem>
               </DropdownMenuContent>

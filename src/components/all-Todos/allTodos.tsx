@@ -24,6 +24,7 @@ export default function AllTodos() {
   const { user } = useContext(AuthContext);
   const { state, loadingData } = useContext(StateContext)
   const todos = state?.todos || [];
+  console.log(loadingData)
   const [showFilters, setShowFilters] = useState(false)
   const {
         catsFilter,
@@ -41,7 +42,7 @@ export default function AllTodos() {
   const activeFilterCount = useMemo(() => {
     return catsFilter.length + statesFilter.length + (params.get("query") ? 1 : 0);
   }, [filterTodos]);
-  if(!user) return <UnauthorizedPage/>
+  
   return (
     <div className="max-w-3xl mx-auto p-6 rounded-2xl glass shadow-lg my-10">
       <div className="flex justify-between items-center mb-6">
@@ -196,7 +197,6 @@ export default function AllTodos() {
                   variant="ghost"
                   size="sm"
                   className="h-4 w-4 p-0 ml-1 text-foreground hover:bg-white/20 rounded-full"
-                  // In a real implementation, you'd remove this category from filters
                 >
                   <X className="h-3 w-3" />
                 </Button>

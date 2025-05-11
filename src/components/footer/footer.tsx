@@ -1,13 +1,9 @@
-    import { Github, Linkedin, Mail, Phone } from "lucide-react"
-    import { Link } from "react-router-dom"
-
-
-
-    export function Footer() {
+import { Github, Linkedin, Mail, Phone } from "lucide-react"
+  export function Footer() {
         const linkedInUrl = ""
         const githubUrl = "https://github.com/Moamen-Yazouri" 
         const email = "moaamen@gmail.com" 
-        const phoneNumber = "+970 (56) 770-9710"
+        const phoneNumber = "+970567709710"
     return (
     <footer className="w-full py-4 px-4  relative z-10">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
@@ -46,7 +42,9 @@
           </a>
 
           <a
-            href={`tel:${phoneNumber.replace(/\D/g, "")}`}
+              href={`https://wa.me/${phoneNumber}`}
+              target="_blank"
+              rel="noopener noreferrer"
             className="text-black hover:text-orange-500 transition-colors"
           >
             <Phone className="h-5 w-5" />
@@ -56,4 +54,4 @@
       </div>
     </footer>
     )
-    }
+  }

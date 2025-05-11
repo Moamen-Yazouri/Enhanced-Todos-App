@@ -5,22 +5,14 @@
     import { Linkedin, Github, Mail, ExternalLink } from "lucide-react"
     import { motion } from "framer-motion"
     import { Link } from "react-router-dom"
-    import { Footer } from "../footer/footer"
 
 
-    interface ContactPageProps {
-    linkedInUrl?: string
-    githubUrl?: string
-    email?: string
-    name?: string
-    }
 
-    export default function ContactPage({
-    linkedInUrl = "https://linkedin.com/in/yourprofile",
-    githubUrl = "https://github.com/Moamen-Yazouri",
-    email = "moaamenalyazouri@gmail.com",
-    name = "Moamen Yazouri",
-    }: ContactPageProps) {
+    export default function ContactPage() {
+    const linkedInUrl = "https://www.linkedin.com/in/moamen-al-yazouri-80742433a/"
+    const githubUrl = "https://github.com/Moamen-Yazouri"
+    const email = "moaamenalyazouri@gmail.com"
+    const name = "Moamen Yazouri"
     return (
         <div className="flex flex-col min-h-screen items-center justify-center p-4 relative overflow-hidden">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -48,17 +40,17 @@
             <CardContent className="space-y-4 pt-2">
                 {/* LinkedIn */}
                 <a href={linkedInUrl} target="_blank" rel="noopener noreferrer" className="group relative block">
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-orange-500 to-rose-500 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
-                <div className="relative flex items-center p-4 bg-zinc-900 rounded-lg transition-colors group-hover:bg-zinc-800">
-                    <div className="bg-zinc-800 group-hover:bg-zinc-700 p-2 rounded-full mr-4">
-                    <Linkedin className="h-6 w-6 text-orange-500" />
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-orange-500 to-rose-500 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+                    <div className="relative flex items-center p-4 bg-zinc-900 rounded-lg transition-colors group-hover:bg-zinc-800">
+                        <div className="bg-zinc-800 group-hover:bg-zinc-700 p-2 rounded-full mr-4">
+                        <Linkedin className="h-6 w-6 text-orange-500" />
+                        </div>
+                        <div className="flex-1">
+                        <h3 className="text-sm font-medium text-white">LinkedIn</h3>
+                        <p className="text-xs text-white/60">{linkedInUrl.replace("https://", "")}</p>
+                        </div>
+                        <ExternalLink className="h-4 w-4 text-white/40 group-hover:text-orange-500" />
                     </div>
-                    <div className="flex-1">
-                    <h3 className="text-sm font-medium text-white">LinkedIn</h3>
-                    <p className="text-xs text-white/60">{linkedInUrl.replace("https://", "")}</p>
-                    </div>
-                    <ExternalLink className="h-4 w-4 text-white/40 group-hover:text-orange-500" />
-                </div>
                 </a>
 
                 {/* GitHub */}
@@ -78,17 +70,17 @@
 
                 {/* Email */}
                 <a href={`mailto:${email}`} className="group relative block">
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-orange-500 to-rose-500 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
-                <div className="relative flex items-center p-4 bg-zinc-900 rounded-lg transition-colors group-hover:bg-zinc-800">
-                    <div className="bg-zinc-800 group-hover:bg-zinc-700 p-2 rounded-full mr-4">
-                    <Mail className="h-6 w-6 text-orange-500" />
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-orange-500 to-rose-500 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+                    <div className="relative flex items-center p-4 bg-zinc-900 rounded-lg transition-colors group-hover:bg-zinc-800">
+                        <div className="bg-zinc-800 group-hover:bg-zinc-700 p-2 rounded-full mr-4">
+                        <Mail className="h-6 w-6 text-orange-500" />
+                        </div>
+                        <div className="flex-1">
+                        <h3 className="text-sm font-medium text-white">Email</h3>
+                        <p className="text-xs text-white/60">{email}</p>
+                        </div>
+                        <Mail className="h-4 w-4 text-white/40 group-hover:text-orange-500" />
                     </div>
-                    <div className="flex-1">
-                    <h3 className="text-sm font-medium text-white">Email</h3>
-                    <p className="text-xs text-white/60">{email}</p>
-                    </div>
-                    <Mail className="h-4 w-4 text-white/40 group-hover:text-orange-500" />
-                </div>
                 </a>
 
                 <div className="pt-4">

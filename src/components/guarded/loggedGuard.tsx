@@ -1,19 +1,23 @@
 import { AuthContext } from "@/providers/auth/authContext"
-import { useContext } from "react"
-import { useNavigate } from "react-router-dom";
+import { useContext, useEffect, useRef } from "react"
+import {  useNavigate } from "react-router-dom";
+import AlreadyLoggedIn from "../alredy-logged/alreadyLogged";
 interface IProps {
     children: React.ReactNode
 }
 const LoggedGuard = (props: IProps) => {
-    const {user} = useContext(AuthContext);
-    const navigate = useNavigate();
-    if(user) {
-        navigate("/already-logged");
-        return;
+    const {user, loadingUser} = useContext(AuthContext);
+    if(!user && !loadingUser) {            
+        return (
+            props.children
+        )
     }
-    return (
-        props.children
-    )
-}
+    else if (loadingUser) {
+        return null;
+    }
+    else {
+        return <AlreadyLoggedIn />;
+    }
+    }
 
 export default LoggedGuard
