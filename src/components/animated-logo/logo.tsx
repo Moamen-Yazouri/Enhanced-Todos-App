@@ -6,7 +6,7 @@ interface LogoProps {
   showText?: boolean
 }
 
-export const Logo: React.FC<LogoProps> = ({ size = 56, className = "", showText = true }) => {
+export const Logo: React.FC<LogoProps> = ({ size = 56, className = "" }) => {
     return (
         <div className={`flex flex-col items-center ${className}`}>
         <img
